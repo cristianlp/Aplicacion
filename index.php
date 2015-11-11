@@ -10,7 +10,6 @@
 	<link rel="stylesheet" href="Estatico/css/estilo.css">
 </head>
 <body>
-	
 	<script src="Estatico/js/jquery-1.11.3.min.js"></script>
 	<script src="Estatico/js/bootstrap.min.js"></script>
 </body>
