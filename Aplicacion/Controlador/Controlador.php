@@ -9,15 +9,14 @@
 	* .............................................
  	*/
 
- 	include_once "Aplicacion/Modelo/AdministradorBD.php";
-
-
-	/**
+ 	/**
 	* @author Cristhian Leonardo León 1151023
 	* @author Oscar Andres Gelvez Soler 1150973
 	* @author Bayardo Dandenis Pineda Mogollon 1150982
 	* @author Elian Nahum Zapata Alfonso 1151193
 	*/
+
+	include_once "Aplicacion/Modelo/AdministradorBD.php";
 	
 
 	class Controlador{
@@ -80,10 +79,17 @@
 			$passwordSSH=$this->encriptarPassword($password);
 
 			$admin = new AdministradorBD();
-			$datos = $admin->login($usuario, $password);
+			$datos = $admin->login($usuario, $passwordSSH);
 
 			if($datos != false){
-				$this->cargarPerfil($datos[0], $datos[1], $usuario);
+
+				$nombres = explode(" ", $datos[0]);
+				$nombre1 = $nombres[0];
+
+				$apellidos = explode(" ", $datos[1]);
+				$apellido1 = $apellidos[0];
+
+				$this->cargarPerfil( $nombre1." ". $apellido1, $datos[2], $usuario);
 				header('Location: index.php');
 			}else{
 				$inicio = $this->leerPlantilla("Aplicacion/Vista/principal/index.html");

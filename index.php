@@ -5,7 +5,7 @@
 	require_once "Aplicacion/Controlador/Controlador.php";
 	require_once "Aplicacion/Controlador/Gerente.php";
 	//require_once "Aplicacion/Controlador/Cliente.php";
-	//require_once "Aplicacion/Controlador/Mesero.php";
+	require_once "Aplicacion/Controlador/Mesero.php";
 	//require_once "Aplicacion/Controlador/Chef.php";
 
 	$principal = new Controlador();
@@ -25,14 +25,14 @@
 		}else if($_SESSION["rol"]=="Gerente"){
 
 			$gerente = new Gerente();
-
+			//SI EL GERENTE TIENE ALGUNA SOLICITUD
 			if(isset($_GET["accion"])){
 				if($_GET['accion'] == "salir"){
 					$_SESSION["nombre"] = false;
 					$_SESSION["rol"] = false;
 					$_SESSION['usuario'] = false;
 					session_destroy();
-					header('location:index.php');
+					header('location: index.php');
 				}
 				
 			}else{
@@ -42,9 +42,15 @@
 		}else if($_SESSION["rol"]=="Mesero"){
 
 			$mesero = new Mesero();
-
+			//SI EL MESERO HACE ALGUNA SOLICITUD
 			if(isset($_GET["accion"])){
-				
+				if($_GET['accion'] == "salir"){
+					$_SESSION["nombre"] = false;
+					$_SESSION["rol"] = false;
+					$_SESSION['usuario'] = false;
+					session_destroy();
+					header('location: index.php');
+				}
 			}else{
 				$mesero->inicioValidado();
 				echo $_SESSION['rol'];
@@ -55,6 +61,13 @@
 			$chef = new Chef();
 
 			if(isset($_GET["accion"])){
+				if($_GET['accion'] == "salir"){
+					$_SESSION["nombre"] = false;
+					$_SESSION["rol"] = false;
+					$_SESSION['usuario'] = false;
+					session_destroy();
+					header('location: index.php');
+				}
 				
 			}else{
 				$chef->inicioValidado();
@@ -64,6 +77,13 @@
 			$cliente = new Cliente();
 
 			if(isset($_GET['accion'])){
+				if($_GET['accion'] == "salir"){
+					$_SESSION["nombre"] = false;
+					$_SESSION["rol"] = false;
+					$_SESSION['usuario'] = false;
+					session_destroy();
+					header('location: index.php');
+				}
 
 			}else{
 				$mesero->inicioValidado();

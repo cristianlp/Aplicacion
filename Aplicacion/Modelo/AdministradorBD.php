@@ -10,30 +10,34 @@
 		public function login($usuario,$password)
 		{
 
-			/*$this->conectar();
-			$aux = $this->consultar("SELECT nombre,rol FROM Usuario WHERE usuario = '".$usuario."' 
+			$this->conectar();
+			$aux = $this->consultar("SELECT nombres, apellidos ,rol FROM Persona WHERE usuario = '".$usuario."' 
 									AND password = '".$password."'");
+			
+
 			$this->desconectar();
 			$cont = 0;
 			$nombre = "";
+			$apellido = "";
 			$rol = "";
 			while($fila = mysqli_fetch_array($aux))
 			{
 				$nombre = $fila[0];
-				$rol = $fila[1];
+				$apellido = $fila[1];
+				$rol = $fila[2];
 				$cont++;
 			}
 			
 			if($cont==1)
 			{
-				return {$nombre, $rol};
+				return array($nombre, $apellido ,$rol);
 			}
 			else
 			{
 				return false;
-			}*/
+			}
 
-			return array("Maite Isabel", "Gerente");
+
 		}
 
 	}
