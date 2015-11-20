@@ -26,7 +26,10 @@
 
 			$barraLat = $this->leerPlantilla("Aplicacion/Vista/gerente/gerente_barra_lateral.html");
 			$barraLat = $this->reemplazar($barraLat, "{{rol}}", $_SESSION["rol"]);
-			
+
+			$opciones_persona = $this->leerPlantilla("Aplicacion/Vista/principal/opciones_persona.html");
+			$barraLat = $this->reemplazar($barraLat, "{{opciones_persona}}", $opciones_persona );
+
 			$plantilla = $this->reemplazar($plantilla, "{{barra_superior}}", $barraSup);
 			$plantilla = $this->reemplazar($plantilla, "{{barra_lateral}}", $barraLat);
 

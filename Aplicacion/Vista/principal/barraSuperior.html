@@ -2,23 +2,17 @@
         <div class="mdl-layout__header-row">
           <span class="mdl-layout-title">{{nombre}} - {{rol}}</span>
           <div class="mdl-layout-spacer"></div>
-          
-          <div id="tt2">
-          <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" id="hdrbtn">
-            <i class="material-icons">settings</i>
-            
-          </div>
-          <div class="mdl-tooltip mdl-tooltip--large" for="tt2">
-              Opciones
-          </div>
-          </button>
 
-          <ul class="mdl-menu mdl-js-menu mdl-js-ripple-effect mdl-menu--bottom-right" for="hdrbtn">
-          	
-            <li class="mdl-menu__item">Configuraci&oacute;n</li>
-            <li class="mdl-menu__item">Ayuda</li>
-            <a href="index.php?accion=salir"><li class="mdl-menu__item">Salir</li></a>
-            
-          </ul>
+          <a href="index.php?accion=salir" class="mdl-color-text--red-600">
+            <div id="tt2">
+              <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" id="hdrbtn">
+                <i class="material-icons">settings</i>
+              </button>
+            </div>
+          </a>
+          <div class="mdl-tooltip mdl-tooltip--large" for="tt2">
+              Salir
+          </div>
+
         </div>
       </header>

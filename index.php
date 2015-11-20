@@ -1,7 +1,7 @@
 <?php
 
 	session_start();
-	
+
 	require_once "Aplicacion/Controlador/Controlador.php";
 	require_once "Aplicacion/Controlador/Gerente.php";
 	//require_once "Aplicacion/Controlador/Cliente.php";
@@ -17,9 +17,9 @@
 			if($_SESSION["tipo"]=="Administrador"){
 
 			}else if($_SESSION["tipo"]=="Operario"){
-				
+
 			}else if($_SESSION["tipo"]=="Cliente"){
-				
+
 			}
 
 		}else if($_SESSION["rol"]=="Gerente"){
@@ -34,10 +34,10 @@
 					session_destroy();
 					header('location: index.php');
 				}
-				
+
 			}else{
 				$gerente->inicioValidado();
-			}	
+			}
 
 		}else if($_SESSION["rol"]=="Mesero"){
 
@@ -68,7 +68,7 @@
 					session_destroy();
 					header('location: index.php');
 				}
-				
+
 			}else{
 				$chef->inicioValidado();
 			}

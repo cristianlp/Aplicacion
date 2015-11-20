@@ -279,3 +279,33 @@ _:-ms-input-placeholder, :root .demo-graph {
       margin-bottom: 40px;
       z-index: 900;
     }
+
+    .demo-card-image.mdl-card {
+  width: 256px;
+  height: 256px;
+}
+.demo-card-image > .mdl-card__actions {
+  height: 52px;
+  padding: 16px;
+  background: rgba(183,28,28,0.8);
+}
+.demo-card-image__filename {
+  color: #fff;
+  font-size: 17px;
+}
+
+.card-menu{
+  background: url('../img/menu.jpg') center / cover;
+}
+
+.card-despensa{
+  background: url('../img/ingredientes.jpg') center / cover;
+}
+
+.card-empleados{
+  background: url('../img/empleados.jpg') center / cover;
+}
+
+.card-clientes{
+  background: url('../img/clientes.jpg') center / cover;
+}
