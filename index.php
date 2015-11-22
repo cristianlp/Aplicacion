@@ -12,9 +12,16 @@
 	//Si esta variable esta definida, el ususario esta logueado
 	if(isset($_SESSION["rol"])){
 
+		//para solicitudes desde formularios
 		if(isset($_POST["tipo"])){
 
-			if($_SESSION["tipo"]=="Administrador"){
+			if($_SESSION["rol"]=="Gerente"){
+				$gerente = new Gerente();
+				if($_POST["tipo"] == "agregar_consultar_empleado"){
+					$gerente->agregar_consultar_empleado($_POST["parametro_busqueda"]);
+				}else{
+
+				}
 
 			}else if($_SESSION["tipo"]=="Operario"){
 
@@ -24,33 +31,75 @@
 
 		}else if($_SESSION["rol"]=="Gerente"){
 
+			//SOLICITUDES PARA CARGAR VISTAS
 			$gerente = new Gerente();
-			//SI EL GERENTE TIENE ALGUNA SOLICITUD
 			if(isset($_GET["accion"])){
-				if($_GET['accion'] == "salir"){
-					$_SESSION["nombre"] = false;
-					$_SESSION["rol"] = false;
-					$_SESSION['usuario'] = false;
-					session_destroy();
-					header('location: index.php');
-				}
+
+				switch ($_GET["accion"]) {
+					//si la soliciud es salir
+					case "salir":
+						$_SESSION["nombre"] = false;
+						$_SESSION["rol"] = false;
+						$_SESSION['usuario'] = false;
+						session_destroy();
+						header('location: index.php');
+						break;
+					//si la solicitud es cambiar contraseña
+					case "cambiar_password":
+						$gerente->vistaCambioPassword();
+						break;
+					//si la solicitud es ver el menu diario
+					case "menu":
+						$gerente->vistaMenu();
+						break;
+					//si la solicitud es ver la despensa|
+					case "despensa":
+						$gerente->vistaDespensa();
+						break;
+					//si la solicitud es ver empleados
+					case "empleados":
+						$gerente->vistaEmpleados();
+						break;
+					//si la solicitud es ver
+					case "recetas":
+						$gerente->vistaRecetas();
+						break;
+						//si la solicitud es ver
+					case "pedidos":
+						$gerente->vistaPedidos();
+						break;
+					//si la solicitud es ver
+					case "ventas":
+						$gerente->vistaVentas();
+						break;
+
+				}//fin del switch
 
 			}else{
 				$gerente->inicioValidado();
 			}
 
-		}else if($_SESSION["rol"]=="Mesero"){
+		}else if($_SESSION["rol"]=="Cajero"){
 
-			$mesero = new Mesero();
+			$cajero = new Cajero();
 			//SI EL MESERO HACE ALGUNA SOLICITUD
 			if(isset($_GET["accion"])){
-				if($_GET['accion'] == "salir"){
-					$_SESSION["nombre"] = false;
-					$_SESSION["rol"] = false;
-					$_SESSION['usuario'] = false;
-					session_destroy();
-					header('location: index.php');
-				}
+
+				switch ($_GET["accion"]) {
+					//si la soliciud es salir
+					case "salir":
+						$_SESSION["nombre"] = false;
+						$_SESSION["rol"] = false;
+						$_SESSION['usuario'] = false;
+						session_destroy();
+						header('location: index.php');
+						break;
+					//si la solicitud es cambiar contraseña
+					case "cambiar_password":
+						$cajero->vistaCambioPassword();
+						break;
+				}//fin del switch
+
 			}else{
 				$mesero->inicioValidado();
 				echo $_SESSION['rol'];

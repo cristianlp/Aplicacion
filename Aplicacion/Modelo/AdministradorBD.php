@@ -11,9 +11,9 @@
 		{
 
 			$this->conectar();
-			$aux = $this->consultar("SELECT nombres, apellidos ,rol FROM Persona WHERE usuario = '".$usuario."' 
-									AND password = '".$password."'");
-			
+			$aux = $this->consultar("SELECT nombres, apellidos ,rol FROM Usuario WHERE usuario = '".$usuario."'
+			AND password = '".$password."'");
+
 
 			$this->desconectar();
 			$cont = 0;
@@ -27,7 +27,7 @@
 				$rol = $fila[2];
 				$cont++;
 			}
-			
+
 			if($cont==1)
 			{
 				return array($nombre, $apellido ,$rol);

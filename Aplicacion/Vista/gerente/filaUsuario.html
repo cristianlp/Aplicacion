@@ -1,0 +1,25 @@
+<tr>
+  <td class="mdl-data-table__cell--non-numeric">{{usuario}}</td>
+  <td>{{nombre}}</td>
+  <td>{{rol}}</td>
+  <td>{{telefono}}</td>
+  <td>
+    <!-- formulario para editar -->
+    <form action="index.php" method="post">
+      <input type="hidden" value="{{usuario}}" name="editar{{rol}}">
+      <button class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored mdl-color-text--teal-500">
+      <i class="material-icons">mode_edit</i>
+      </button>
+    </form>
+  </td>
+
+  <td>
+    <!-- formulario para eliminar -->
+    <form action="index.php" method="post">
+      <input type="hidden" value="{{usuario}}" name="eliminar{{rol}}">
+      <button class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored mdl-color-text--red-800">
+      <i class="material-icons">delete</i>
+      </button>
+    </form>
+  </td>
+</tr>

@@ -280,7 +280,7 @@ _:-ms-input-placeholder, :root .demo-graph {
       z-index: 900;
     }
 
-    .demo-card-image.mdl-card {
+.demo-card-image.mdl-card {
   width: 256px;
   height: 256px;
 }
@@ -299,13 +299,41 @@ _:-ms-input-placeholder, :root .demo-graph {
 }
 
 .card-despensa{
-  background: url('../img/ingredientes.jpg') center / cover;
+  background: url('../img/despensa.jpg') center / cover;
 }
 
 .card-empleados{
   background: url('../img/empleados.jpg') center / cover;
 }
 
-.card-clientes{
-  background: url('../img/clientes.jpg') center / cover;
+.card-recetas{
+  background: url('../img/recetas.jpg') center / cover;
+}
+
+.card-pedidos{
+  background: url('../img/pedidos.jpg') center / cover;
+}
+
+.card-ventas{
+  background: url('../img/ventas.jpg') center / cover;
+}
+
+table *{
+  text-align: center !important;
+}
+.manito{
+  cursor: pointer;
+}
+
+#tarjeta-agregar-empleados{
+  height: 200px;
+  background: url('../img/agregarEmpleado.png') center / cover;
+}
+
+#tarjeta-consultar-empleados{
+  height: 200px;
+  background: url('../img/agregarEmpleado.png') center / cover;
+}
+.text-center{
+  text-align: center !important;
 }
