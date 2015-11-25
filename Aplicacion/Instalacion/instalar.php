@@ -35,7 +35,9 @@
 		usuario VARCHAR (20),
 		password VARCHAR(100) NOT NULL,
 		rol VARCHAR (20),
-		PRIMARY KEY(usuario)
+		PRIMARY KEY(usuario),
+		UNIQUE (cedula),
+		UNIQUE (correo)
 	)";
 
 	if(mysqli_query($conexion,$tabla))
@@ -69,8 +71,9 @@
 		codigo_ingrediente VARCHAR (20),
 		nombre_ingrediente VARCHAR (20),
 		cantidad INT,
-		descripcion VARCHAR (40),
+		unidad VARCHAR (20),
 		codigo_despensa VARCHAR (20) NOT NULL,
+		esta_en_menu VARCHAR (1) NOT NULL,
 		PRIMARY KEY (codigo_ingrediente),
 		FOREIGN KEY (codigo_despensa) REFERENCES Despensa (codigo_despensa)
 	)";
@@ -89,7 +92,8 @@
 		codigo_receta VARCHAR (20),
 		nombre_receta VARCHAR (20),
 		chef VARCHAR (20) NOT NULL,
-		descripcion_proceso VARCHAR (800),
+		esta_en_menu VARCHAR (1) NOT NULL,
+		descripcion_proceso VARCHAR (5000),
 		PRIMARY KEY(codigo_receta),
 		FOREIGN KEY (chef) REFERENCES Usuario (usuario)
 	)";
@@ -126,7 +130,6 @@
 		codigo_pedido VARCHAR (20),
 		cliente VARCHAR (20) NOT NULL,
 		mesero VARCHAR (20) NOT NULL,
-		producto VARCHAR (20) NOT NULL,
 		fecha DATETIME NOT NULL,
 		valor DOUBLE,
 		estado VARCHAR (20) NOT NULL,
@@ -144,30 +147,6 @@
 		echo("No se creo la tabla Pedido<br>");
 	}
 
-
-		//tabla Producto
-		$tabla = "CREATE TABLE Producto(
-			nombre_producto VARCHAR (20),
-			nombre_receta VARCHAR (20),
-			esta_en_menu VARCHAR (1) NOT NULL,
-			codigo_pedido VARCHAR(20),
-			precio DOUBLE,
-			codigo_despensa VARCHAR (20) NOT NULL,
-			PRIMARY KEY(nombre_producto),
-			FOREIGN KEY (nombre_receta) REFERENCES Receta (codigo_receta),
-			FOREIGN KEY (codigo_pedido) REFERENCES Pedido (codigo_pedido),
-			FOREIGN KEY (codigo_despensa) REFERENCES Despensa (codigo_despensa)
-		)";
-
-		if(mysqli_query($conexion,$tabla))
-		{
-			echo("Se creo la tabla Producto<br>");
-		}
-		else
-		{
-			echo("No se creo la tabla Producto<br>");
-		}
-
 		//tabla IngredienteXreceta
 		$tabla = "CREATE TABLE Ingrediente_Receta(
 			codigo_receta VARCHAR (20),
@@ -180,16 +159,57 @@
 
 		if(mysqli_query($conexion,$tabla))
 		{
-			echo("Se creo la tabla relacion<br>");
+			echo("Se creo la tabla relacion 1<br>");
 		}
 		else
 		{
-			echo("No se creo la tabla relacion<br>");
+			echo("No se creo la tabla relacion 1<br>");
+		}
+
+		//tabla Receta_Pedido
+		$tabla = "CREATE TABLE Receta_Pedido(
+			codigo_receta VARCHAR (20),
+			codigo_pedido VARCHAR (20),
+			cantidad INT NOT NULL,
+			PRIMARY KEY(codigo_receta, codigo_pedido),
+			FOREIGN KEY (codigo_receta) REFERENCES Receta (codigo_receta) ON UPDATE CASCADE,
+			FOREIGN KEY (codigo_pedido) REFERENCES Pedido (codigo_pedido) ON UPDATE CASCADE
+		)";
+
+		if(mysqli_query($conexion,$tabla))
+		{
+			echo("Se creo la tabla relacion 2<br>");
+		}
+		else
+		{
+			echo("No se creo la tabla relacion 2<br>");
+		}
+
+		//tabla ingrediente_pedido
+		$tabla = "CREATE TABLE Ingrediente_Pedido(
+			codigo_ingrediente VARCHAR (20),
+			codigo_pedido VARCHAR (20),
+			cantidad INT NOT NULL,
+			PRIMARY KEY(codigo_ingrediente, codigo_pedido),
+			FOREIGN KEY (codigo_ingrediente) REFERENCES Ingrediente (codigo_ingrediente),
+			FOREIGN KEY (codigo_pedido) REFERENCES Pedido (codigo_pedido)
+		)";
+
+		if(mysqli_query($conexion,$tabla))
+		{
+			echo("Se creo la tabla relacion 3<br>");
+		}
+		else
+		{
+			echo("No se creo la tabla relacion 3<br>");
 		}
 
 
 	//se agrega el usuario de tipo gerente para arrancar el sistema
 	$query = "INSERT INTO Usuario VALUES('Cristhian Leonardo','Leon Lizarazo','1090484602','cristhian.leonlizarazo@gmail.com','3223898713', 'Altos de tamarindo casa N-12', 'gerente1', '".sha1("1234")."', 'Gerente')";
+	mysqli_query($conexion,$query);
+
+	$query = "INSERT INTO Despensa VALUES('despensa1', 'gerente1')";
 	mysqli_query($conexion,$query);
 
 	mysqli_close($conexion);

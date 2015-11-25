@@ -337,3 +337,62 @@ table *{
 .text-center{
   text-align: center !important;
 }
+
+#formulario-agregar-empleado #boton-enviar{
+  margin: 0 auto !important;
+  margin-left: 220px !important;
+  margin-top:20px !important;
+}
+.margin-center{
+  margin-left: 110px !important;
+}
+
+.contenedor-radiobutton{
+  margin-left: 150px !important;
+}
+.alerta{
+    position: absolute !important;
+    bottom: 6rem !important;
+    right: 6rem !important;
+    color: #FFF !important;
+    max-width: 50% !important;
+    padding: 1rem !important;
+    text-align: right !important;
+    font-size: 1.3rem !important;
+    border-radius: .4rem !important;
+    box-shadow: 0 0 .7rem #000 !important;
+    position: fixed !important;
+    opacity: 1 !important;
+    transition: all .3s ease !important;
+    border: 2px solid rgba(26, 188, 156,1) !important;
+    background-color: rgba(26, 188, 156,.9) !important;
+}
+
+#botonAtras{
+  position: absolute;
+  top:160px;
+  left:430px;
+}
+.demo-card-wide.mdl-card {
+  width: 400px;
+}
+.demo-card-wide > .mdl-card__title {
+  color: #fff;
+  height: 120px;
+  background: url('../assets/demos/welcome_card.jpg') center / cover;
+}
+.demo-card-wide > .mdl-card__menu {
+  color: #fff;
+}
+select{
+  width: 100%;
+  background: none;
+  border: 1px solid gray;
+  height: 30px;
+  border-radius: 2px;
+}
+.boton_agregar_ingrediente{
+  position: absolute;
+  bottom: 150px;
+  right: 50px;
+}

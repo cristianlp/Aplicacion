@@ -17,7 +17,7 @@
 	*/
 
 	include_once "Aplicacion/Modelo/AdministradorBD.php";
-	
+
 
 	class Controlador{
 
@@ -97,7 +97,7 @@
 				//$inicio = $this->alerta($inicio, "No se ha podido iniciar sesión", "Verifique sus datos e intentelo nuevamente");
 				$this->mostrarVista($inicio);
 			}
-			
+
 		}
 
 		/**
@@ -108,7 +108,7 @@
 		}
 
 		/**
-		*	Metodo de seguridad. Encripta la contraseña mediante el algoritmo SHA1. 
+		*	Metodo de seguridad. Encripta la contraseña mediante el algoritmo SHA1.
 		*	Todas las validaciones y almacenamientos se hacen en este sistema.
 		*	Las bases de datos no guardaran contraseñas tal cual las incluye el usuario.
 		*	@param $password - Contraseña a encriptar
@@ -127,7 +127,7 @@
 		*/
 		public function alerta($plantilla, $titulo, $alerta)
 		{
-			return $plantilla."<script>alerta(\"".$titulo."\",\"".$alerta."\",3000);</script>";
+			return $plantilla."<script>alerta(\"".$titulo."\",\"".$alerta."\");</script>";
 		}
 
 		/**

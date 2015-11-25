@@ -19,8 +19,34 @@
 				$gerente = new Gerente();
 				if($_POST["tipo"] == "agregar_consultar_empleado"){
 					$gerente->agregar_consultar_empleado($_POST["parametro_busqueda"]);
-				}else{
-
+				}else if($_POST["tipo"] == "agregarEmpleado"){
+					$gerente->agregarEmpleado($_POST["usuario"], $_POST["nombres"], $_POST["apellidos"], $_POST["cedula"],
+						$_POST["correo"], $_POST["telefono"], $_POST["direccion"], $_POST["rol"], $_POST["password"]
+					);
+				}else if($_POST["tipo"] == "vistaEditarEmpleado"){
+					$gerente->vistaEditarEmpleado($_POST["usuario"]);
+				}else if($_POST["tipo"] == "editarEmpleado"){
+					$gerente->editarEmpleado($_POST["usuario"], $_POST["nombres"], $_POST["apellidos"],
+					 $_POST["cedula"], $_POST["correo"], $_POST["telefono"], $_POST["direccion"]);
+				}else if($_POST["tipo"] == "eliminarEmpleado"){
+					$gerente->eliminarEmpleado($_POST["usuario"]);
+				}else if($_POST["tipo"] == "vista_agregar_ingrediente"){
+					$gerente->vista_agregar_ingrediente($_POST["codigo_ingrediente"]);
+				}else if($_POST["tipo"] == "agregarIngrediente"){
+					$gerente->agregar_ingrediente($_POST["codigo_ingrediente"], $_POST["nombre_ingrediente"],
+					$_POST["cantidad"],$_POST["unidad"]
+				);
+				}else if($_POST["tipo"] == "vistaEditarIngrediente"){
+					$gerente->vista_editar_ingrediente($_POST["codigo_ingrediente"]);
+				}else if($_POST["tipo"] == "editarIngrediente"){
+					$gerente->editar_ingrediente(
+					$_POST["codigo_ingrediente"], $_POST["nombre_ingrediente"],
+					$_POST["cantidad"],$_POST["unidad"]
+					);
+				}else if($_POST["tipo"] == "agregar_consultar_receta"){
+					$gerente->agregar_consultar_receta($_POST["codigo_receta"]);
+				}else if($_POST["tipo"] == "agregar_receta"){
+					$gerente->agregar_receta($_POST["codigo_receta"], $_POST["nombre_receta"] , $_POST["chef"],$_POST['cantidades'], $_POST['ingredientes'], $_POST['descripcion_proceso'] );
 				}
 
 			}else if($_SESSION["tipo"]=="Operario"){

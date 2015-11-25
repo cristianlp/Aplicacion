@@ -1,0 +1,54 @@
+<div class="mdl-grid">
+  <div class="mdl-cell mdl-cell--12-col">
+    <h4>{{mensaje_encabezado}}</h4>
+
+    <!-- Colored FAB button with ripple -->
+    <a href="index.php?accion=despensa" id="botonAtras">
+      <button id="atras" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored mdl-color--red-600">
+      <i class="material-icons">keyboard_arrow_left</i>
+    </button>
+  </a>
+    <div class="mdl-tooltip mdl-tooltip--large" for="atras">
+Atr&aacute;s    </div>
+
+    <form action="index.php" method="post" id="formulario-agregar-empleado">
+      <input type="hidden" name="tipo" value="{{tipo}}">
+
+      <div class="mld-grid margin-center">
+        <div class="mdl-cell mdl-cell--12-col">
+          <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <input type="hidden" name="codigo_ingrediente" value="{{codigo_ingrediente}}" required>
+            <input class="mdl-textfield__input" type="text" id="codigo_ingrediente" name="codigo_ingrediente" value="{{codigo_ingrediente}}" required {{disable}}>
+            <label class="mdl-textfield__label" for="codigo_ingrediente">Codigo del ingrediente</label>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+        <input class="mdl-textfield__input" type="text" id="nombre_ingrediente" name="nombre_ingrediente" value="{{nombre_ingrediente}}" required>
+        <label class="mdl-textfield__label" for="nombre_ingrediente">Nombre</label>
+      </div>
+
+      <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+        <input class="mdl-textfield__input" type="text" id="cantidad" name="cantidad" value="{{cantidad}}" required>
+        <label class="mdl-textfield__label" for="cantidad">Cantidad en stock</label>
+      </div>
+
+      <div class="mld-grid margin-center">
+        <div class="mdl-cell mdl-cell--12-col">
+          <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <input class="mdl-textfield__input" type="text" id="unidad" name="unidad" value="{{unidad}}" required>
+            <label class="mdl-textfield__label" for="unidad">Unidad de medida</label>
+          </div>
+        </div>
+      </div>
+
+
+        <button id="boton-enviar" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent mdl-color--indigo-500">
+        {{nombre_boton}}
+        </button>
+
+    </form>
+  </div>
+</div>

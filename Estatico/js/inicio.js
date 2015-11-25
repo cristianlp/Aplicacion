@@ -1,23 +1,5 @@
-function alerta () {
-	var content = "";
-	if(arguments.length >= 2){
-
-		content = "<h3>"+arguments[0]+"</h3><p>"+arguments[1]+"</p>";
-	}else{
-		content= "<p>"+arguments[0]+"</p>";
-	}
-
-	var div = document.createElement("div");
-	var claseDiv = "alerta";
-	div.setAttribute("class", claseDiv);
-	div.innerHTML = content;
-	document.body.appendChild(div);
-	setTimeout(function() {
-		div.style.opacity = "0";
-	}, arguments[2] || 10000);
-	setTimeout(function() {
-		document.body.removeChild(div);
-	}, arguments[2]+1000 ||  11000);
+function alerta (titulo, mensaje) {
+	swal(titulo, mensaje);
 }
 
 	function shake(dom){
@@ -91,12 +73,33 @@ function alerta () {
 	$(document).ready(function(){
 		var rol = $(".rol_persona").html();
 		colorearNavegacionGerente();
-		/*if(rol == "Cajero"){
-			colorearNavegacionCajero();
-		}else if(rol == "Gerente"){
-			colorearNavegacionGerente();
-		}else if(rol == "Chef"){
-			colorearNavegacionChef();
-		}*/
+
+		var ing = 2;
+		$("#ingX").attr("id","ing1");
+		$("#cantidadX").attr("id","cantidad1");
+		$(".forX").attr("for","cantidad1");
+
+		$(".botoncito_agregar").click(function(){
+			$("#panel_agregar_ingredientes").append(
+			"<div class='mdl-grid'>"+
+				"<div class='mdl-cell mdl-cell--12-col'>"+
+					"<div class='mdl-textfield mdl-js-textfield mdl-textfield--floating-label'>"+
+						"<select name='ingredientes[]' id='ingX'> "+
+							$("#ing1").html() +
+						"</select>"+
+						"<label class='mdl-textfield__label' for=''></label>"+
+					"</div>"+
+					"<div class='mdl-textfield mdl-js-textfield mdl-textfield--floating-label'>"+
+						"<input class='mdl-textfield__input' type='number' pattern='-?[0-9]*(\.[0-9]+)?' id='cantidadX' name='cantidades[]' value='' required {{disable}} placeholder='Cantidad'> "+
+					"</div>"+
+				"</div>"+
+			"</div>"
+				);
+
+		$("#ingX").attr("id","ing" + ing);
+		$("#cantidadX").attr("id","cantidad" + ing);
+		$(".forX").attr("for","cantidad" + ing);
+		ing++;
+		});
 
 	});
