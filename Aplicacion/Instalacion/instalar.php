@@ -26,12 +26,12 @@
 
 	//tabla Usuario
 	$tabla = "CREATE TABLE Usuario(
-		nombres VARCHAR (50) NOT NULL,
-		apellidos VARCHAR (50) NOT NULL,
+		nombres VARCHAR (100) NOT NULL,
+		apellidos VARCHAR (100) NOT NULL,
 		cedula VARCHAR (20) NOT NULL,
 		correo VARCHAR(100) NOT NULL,
-		telefono VARCHAR (10) NOT NULL,
-		direccion VARCHAR (50) NOT NULL,
+		telefono VARCHAR (15) NOT NULL,
+		direccion VARCHAR (100) NOT NULL,
 		usuario VARCHAR (20),
 		password VARCHAR(100) NOT NULL,
 		rol VARCHAR (20),
@@ -69,9 +69,10 @@
 	//tabla Ingrediente
 	$tabla = "CREATE TABLE Ingrediente(
 		codigo_ingrediente VARCHAR (20),
-		nombre_ingrediente VARCHAR (20),
+		nombre_ingrediente VARCHAR (50),
 		cantidad INT,
-		unidad VARCHAR (20),
+		unidad VARCHAR (20) NOT NULL,
+		tipo VARCHAR(1) NOT NULL,
 		codigo_despensa VARCHAR (20) NOT NULL,
 		esta_en_menu VARCHAR (1) NOT NULL,
 		PRIMARY KEY (codigo_ingrediente),
@@ -90,7 +91,7 @@
 	//tabla Receta
 	$tabla = "CREATE TABLE Receta(
 		codigo_receta VARCHAR (20),
-		nombre_receta VARCHAR (20),
+		nombre_receta VARCHAR (50),
 		chef VARCHAR (20) NOT NULL,
 		esta_en_menu VARCHAR (1) NOT NULL,
 		descripcion_proceso VARCHAR (5000),

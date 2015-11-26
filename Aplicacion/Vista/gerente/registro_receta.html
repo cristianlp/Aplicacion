@@ -2,7 +2,7 @@
   <div class="mdl-cell mdl-cell--12-col">
     <h4>{{mensaje_encabezado}}</h4>
 
-    <button id="add" class="botoncito_agregar mdl-button mdl-js-button mdl-button--fab mdl-button--colored boton_agregar_ingrediente mdl-color--red-600">
+    <button id="add" class="botoncito_agregar mdl-button mdl-js-button mdl-button--fab mdl-button--colored boton_agregar_ingrediente mdl-color--red-600" {{oculto}}>
       <i class="material-icons">add</i>
     </button>
     <div class="mdl-tooltip mdl-tooltip--large" for="add">
@@ -15,6 +15,7 @@
         <div class="mdl-grid margin-center">
           <div class="mdl-cell mdl-cell--12-col">
             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+              <input class="mdl-textfield__input" type="hidden" name="codigo_receta_ok" value="{{codigo_receta}}">
               <input class="mdl-textfield__input" type="text" id="codigo_receta" name="codigo_receta" value="{{codigo_receta}}" required {{disable}}>
               <label class="mdl-textfield__label" for="codigo_receta">codigo de la receta</label>
             </div>
@@ -37,14 +38,14 @@
         <div class="mdl-grid">
           <div class="mdl-cell mdl-cell--12-col">
             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-              <select name="ingredientes[]" id="ingX" required>
+              <select name="ingredientes[]" id="ingX" {{oculto}} {{required}}>
                 {{ingredientes}}
               </select>
               <label class="mdl-textfield__label" for=""></label>
             </div>
             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-              <input class="mdl-textfield__input" type="number" pattern="-?[0-9]*(\.[0-9]+)?" id="cantidadX" name="cantidades[]" value="" required {{disable}}>
-              <label class="mdl-textfield__label forX" for="cantidadX">cantidad</label>
+              <input class="mdl-textfield__input" type="number" step="any" id="cantidadX" name="cantidades[]" value="" {{required}} {{oculto}}>
+              <label class="mdl-textfield__label forX" for="cantidadX" {{oculto}}>cantidad</label>
             </div>
           </div>
         </div>
@@ -56,7 +57,7 @@
         <div class="mdl-grid margin-center">
           <div class="mdl-cell mdl-cell--12-col">
             <div class="mdl-textfield mdl-js-textfield">
-              <textarea class="mdl-textfield__input" type="text" rows= "8" id="sample5" name="descripcion_proceso" required ></textarea>
+              <textarea class="mdl-textfield__input ancho-100" type="text" rows= "12" id="sample5" name="descripcion_proceso" required >{{descripcion_proceso}}</textarea>
               <label class="mdl-textfield__label" for="sample5">Descripcion del proceso...</label>
             </div>
           </div>

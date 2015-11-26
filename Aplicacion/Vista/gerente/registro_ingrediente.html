@@ -44,6 +44,19 @@ Atr&aacute;s    </div>
         </div>
       </div>
 
+      <div class="mld-grid margin-center">
+        <div class="mdl-cell mdl-cell--12-col">
+          <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-1">
+            <input type="radio" id="option-1" class="mdl-radio__button" name="tipo_ingrediente" value="I" checked {{disable}}>
+            <span class="mdl-radio__label">Ingrediente</span>
+          </label>
+          <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-2">
+            <input type="radio" id="option-2" class="mdl-radio__button" name="tipo_ingrediente" value="P" {{disable}}>
+            <span class="mdl-radio__label">Producto preparado</span>
+          </label>
+        </div>
+      </div>
+
 
         <button id="boton-enviar" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent mdl-color--indigo-500">
         {{nombre_boton}}

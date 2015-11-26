@@ -82,8 +82,8 @@
     }
 
     public function modificarUsuario($usuario, $nombres , $apellidos,
-    $cedula, $correo, $telefono, $direccion){
-
+    $cedula, $correo, $telefono, $direccion)
+    {
 			$this->conectar();
 			$aux = $this->consultar(" UPDATE Usuario SET nombres = '".$nombres."', apellidos = '".$apellidos."' , cedula = '".$cedula."' , correo = '".$correo."', telefono = '".$telefono."', direccion='".$direccion."' WHERE usuario = '".$usuario."'");
 			$this->desconectar();
@@ -100,7 +100,7 @@
     public function visualizarRecetas(){
 
       $this->conectar();
-      $aux = $this->consultar("SELECT r.codigo_receta, r.nombre_receta, c.nombres, c.apellidos
+      $aux = $this->consultar("SELECT r.codigo_receta, r.nombre_receta, c.nombres, c.apellidos, r.esta_en_menu
          FROM Receta r, Usuario c WHERE r.chef = c.usuario AND c.rol = 'Chef' ");
       $this->desconectar();
       $datos = array();
@@ -113,7 +113,7 @@
 
     public function visualizarReceta($codigo_receta){
       $this->conectar();
-			$aux = $this->consultar("SELECT * FROM Receta WHERE codigo_receta = '".$codigo_receta."'");
+			$aux = $this->consultar("SELECT R.codigo_receta, R.nombre_receta, R.descripcion_proceso, C.nombres FROM Receta R, Usuario C WHERE codigo_receta = '".$codigo_receta."' AND C.usuario = R.chef");
 			$this->desconectar();
 			$datos = array();
 			while($fila=mysqli_fetch_array($aux))
@@ -128,6 +128,13 @@
       }
     }
 
+    public function modificar_receta($codigo_receta, $nombre_receta, $chef, $descripcion_proceso){
+      $this->conectar();
+      $aux = $this->consultar(" UPDATE Receta SET nombre_receta = '".$nombre_receta."', chef = '".$chef."', descripcion_proceso = '".$descripcion_proceso."' WHERE codigo_receta = '".$codigo_receta."'");
+      $this->desconectar();
+      return $aux;
+    }
+
     public function visualizarIngredientes(){
       $this->conectar();
       $aux = $this->consultar("SELECT * FROM Ingrediente");
@@ -140,11 +147,24 @@
       return $datos;
     }
 
-    public function registrar_ingrediente($codigo, $nombre, $cantidad, $unidad){
+    public function visualizarIngredientesReceta($codigo_receta){
+      $this->conectar();
+      $aux = $this->consultar("SELECT * FROM Ingrediente");
+      $this->desconectar();
+      $datos = array();
+      while($fila=mysqli_fetch_array($aux))
+      {
+        array_push($datos,$fila);
+      }
+      return $datos;
+    }
+
+
+    public function registrar_ingrediente($codigo, $nombre, $cantidad, $unidad, $tipo){
       $this->conectar();
 
 			$aux = $this->consultar(
-        "INSERT INTO Ingrediente VALUES('".$codigo."','".$nombre."',".$cantidad.",'".$unidad."','despensa1', 'N');"
+        "INSERT INTO Ingrediente VALUES('".$codigo."','".$nombre."',".$cantidad.",'".$unidad."','".$tipo."','despensa1', 'N');"
       );
 
 			$this->desconectar();
@@ -210,6 +230,19 @@
 				return true;
 			}
 			return false;
+    }
+
+    public function visualizarIngredientesDeReceta($codigo_receta){
+      $this->conectar();
+      $aux = $this->consultar(
+        "SELECT i.nombre_ingrediente, ir.cantidad, i.unidad from Ingrediente_Receta ir , Ingrediente i WHERE ir.codigo_receta = '".$codigo_receta."' AND ir.codigo_ingrediente = i.codigo_ingrediente"
+      );
+      $datos = array();
+      while($fila=mysqli_fetch_array($aux))
+      {
+        array_push($datos,$fila);
+      }
+      return $datos;
     }
 
   }

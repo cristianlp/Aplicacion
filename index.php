@@ -34,7 +34,7 @@
 					$gerente->vista_agregar_ingrediente($_POST["codigo_ingrediente"]);
 				}else if($_POST["tipo"] == "agregarIngrediente"){
 					$gerente->agregar_ingrediente($_POST["codigo_ingrediente"], $_POST["nombre_ingrediente"],
-					$_POST["cantidad"],$_POST["unidad"]
+					$_POST["cantidad"],$_POST["unidad"], $_POST['tipo_ingrediente']
 				);
 				}else if($_POST["tipo"] == "vistaEditarIngrediente"){
 					$gerente->vista_editar_ingrediente($_POST["codigo_ingrediente"]);
@@ -47,6 +47,13 @@
 					$gerente->agregar_consultar_receta($_POST["codigo_receta"]);
 				}else if($_POST["tipo"] == "agregar_receta"){
 					$gerente->agregar_receta($_POST["codigo_receta"], $_POST["nombre_receta"] , $_POST["chef"],$_POST['cantidades'], $_POST['ingredientes'], $_POST['descripcion_proceso'] );
+				}else if($_POST["tipo"] == "vistaEditarReceta"){
+					$gerente->vista_editar_receta($_POST["codigo_receta"]);
+				}else if($_POST["tipo"] == "editar_receta"){
+					$gerente->editar_receta(
+						$_POST["codigo_receta_ok"],$_POST["nombre_receta"],
+						$_POST['chef'], $_POST['descripcion_proceso']
+					);
 				}
 
 			}else if($_SESSION["tipo"]=="Operario"){

@@ -396,3 +396,7 @@ select{
   bottom: 150px;
   right: 50px;
 }
+.ancho-100{
+  margin-left: -90px !important;
+  width: 550px;
+}
