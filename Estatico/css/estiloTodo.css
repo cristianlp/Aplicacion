@@ -321,7 +321,7 @@ _:-ms-input-placeholder, :root .demo-graph {
 table *{
   text-align: center !important;
 }
-.manito{
+.manito, .manito_card{
   cursor: pointer;
 }
 
@@ -399,4 +399,29 @@ select{
 .ancho-100{
   margin-left: -90px !important;
   width: 550px;
+}
+.menu, .recetas{
+  width: 350px;
+  padding-bottom: 20px;
+}
+.recetas{
+  /*height: 500px;*/
+}
+
+.menu{
+  /*height: 500px;*/
+}
+#left-defaults div, #right-defaults div{
+  width: 90%;
+  height: 60px;
+  margin: 5px auto;
+  border-radius: 3px;
+  padding: 10px;
+}
+
+#left-defaults label, #right-defaults label{
+  margin: 10px auto;
+}
+.oculto{
+  display: none;
 }

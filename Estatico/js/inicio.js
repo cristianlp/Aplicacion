@@ -1,4 +1,4 @@
-	function alerta (titulo, mensaje) {
+function alerta (titulo, mensaje) {
 		swal(titulo, mensaje);
 	}
 
@@ -73,6 +73,20 @@
 	$(document).ready(function(){
 		var rol = $(".rol_persona").html();
 		colorearNavegacionGerente();
+
+		$(".manito_card").hover(
+			function(){
+				$(this).addClass("mdl-shadow--4dp");
+			},
+			function(){
+				$(this).removeClass("mdl-shadow--4dp");
+			}
+		);
+
+		$("#guardar_menu").click(function(){
+			var c = $("#left-defaults").html();
+			console.log(c);
+		});
 
 		var ing = 2;
 		$("#ingX").attr("id","ing1");

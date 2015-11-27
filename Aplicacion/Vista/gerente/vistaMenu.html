@@ -1,1 +1,30 @@
-<h1>vista Menu</h1>
+<div class="mdl-grid">
+
+  <form action="index.php" method="post">
+    <input type="text" name="tipo" value="guardar_menu">
+    <input type="text" name="datos_menu[]" value="vacio">
+  </form>
+
+  <!-- Colored FAB button with ripple -->
+  <a>
+    <button id="guardar_menu" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored mdl-color--red-600">
+    <i class="material-icons">save</i>
+  </button>
+</a>
+  <div class="mdl-tooltip mdl-tooltip--large" for="guardar_menu">
+Guardar    </div>
+
+
+
+  <div class="mdl-cell mdl-cell--5-col menu mdl-card mdl-shadow--2dp" id="left-defaults">
+    <label for="">Men&uacute; del d&iacute;a</label>
+      {{menu_del_dia_1}}
+      {{menu_del_dia_2}}
+  </div>
+
+  <div class="mdl-cell mdl-cell--5-col recetas mdl-card mdl-shadow--2dp" id="right-defaults">
+    <label for="">Recetas y productos</label>
+      {{recetas_candidatos}}
+      {{productos_candidatos}}
+  </div>
+</div>

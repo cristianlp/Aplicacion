@@ -47,8 +47,52 @@ class Gerente extends Controlador
 	{
 		$plantilla = $this -> init();
 		$workspace = $this->leerPlantilla("Aplicacion/Vista/gerente/vistaMenu.html");
+		$gerenteBD = new GerenteBD();
+		$workspace = $this->reemplazar($workspace, "{{productos_candidatos}}", $this->procesarProductosCandidatos($gerenteBD->visualizarProductosCandidatos("N")));
+		$workspace = $this->reemplazar($workspace, "{{recetas_candidatos}}", $this->procesarRecetasCandidatos($gerenteBD->visualizarRecetasCandidatas("N")));
+		$workspace = $this->reemplazar($workspace, "{{menu_del_dia_1}}", $this->procesarProductosCandidatos($gerenteBD->visualizarProductosCandidatos("S")));
+		$workspace = $this->reemplazar($workspace, "{{menu_del_dia_2}}", $this->procesarRecetasCandidatos($gerenteBD->visualizarRecetasCandidatas("S")));
 		$plantilla = $this->reemplazar($plantilla, "{{workspace}}", $workspace);
 		$this->mostrarVista($plantilla);
+	}
+
+	public function procesarProductosCandidatos($productos){
+		$total = "";
+		$modelo_fila = "
+		<div class='mdl-shadow--2dp manito_card'>
+			<span id='nombre'>{{nombre_ingrediente}}</span><br>
+			<span id='cantidad_unidad'>{{cantidad_unidad}}</span>
+			<span id='codigo_enviar' class='oculto'>P-{{codigo_ingrediente}}</span>
+		</div>";
+		for($i = 0; $i< count($productos); $i++){
+			$producto = $productos[$i];
+			$tr = $modelo_fila;
+			$tr = $this->reemplazar($tr, "{{codigo_ingrediente}}", $producto['codigo_ingrediente']);
+			$tr = $this->reemplazar($tr, "{{nombre_ingrediente}}", "<b>Nombre: </b>" . $producto['nombre_ingrediente']);
+			$tr = $this->reemplazar($tr, "{{cantidad_unidad}}", "<b>Cantidad: </b>" . $producto['cantidad'] . " - " . $producto['unidad']);
+			$total .= $tr;
+		}
+
+		return $total;
+	}
+
+	public function procesarRecetasCandidatos($productos){
+		$total = "";
+		$modelo_fila = "
+		<div class='mdl-shadow--2dp manito_card'>
+			<span id='codigo'>{{codigo_receta}}</span><br>
+			<span id='nombre'>{{nombre_receta}}</span>
+			<span id='codigo_enviar' class='oculto'>R-{{codigo_receta}}</span>
+		</div>";
+		for($i = 0; $i< count($productos); $i++){
+			$producto = $productos[$i];
+			$tr = $modelo_fila;
+			$tr = $this->reemplazar($tr, "{{codigo_receta}}", "<b>C&oacute;digo: </b>" . $producto['codigo_receta']);
+			$tr = $this->reemplazar($tr, "{{nombre_receta}}", "<b>Nombre: </b>" . $producto['nombre_receta']);
+			$total .= $tr;
+		}
+
+		return $total;
 	}
 
 	//DESPENSA - INGREDIENTES
@@ -81,6 +125,12 @@ class Gerente extends Controlador
 				$tr = $this->reemplazar($tr, "{{tipo_ingrediente}}", "Ingrediente");
 			}else{
 				$tr = $this->reemplazar($tr, "{{tipo_ingrediente}}", "Producto preparado");
+			}
+
+			if($ingrediente['esta_en_menu'] == "S"){
+				$tr = $this->reemplazar($tr, "{{esta_en_menu}}", "S&iacute;");
+			}else{
+				$tr = $this->reemplazar($tr, "{{esta_en_menu}}", "No");
 			}
 
 			$tr = $this->reemplazar($tr, "{{cantidad}}", $ingrediente['cantidad'] . " " . $ingrediente['unidad']);
@@ -461,8 +511,12 @@ class Gerente extends Controlador
 	public function procesarConsultaIngredientesReceta($ingredientes){
 		$total = "";
 		for($i = 0; $i < count($ingredientes); $i++){
+
 			$ingrediente = $ingredientes[$i];
-			$total .= "<option value='".$ingrediente['codigo_ingrediente']."''>".$ingrediente['nombre_ingrediente']." - ".$ingrediente['unidad']. "</option>";
+			if($ingrediente['tipo'] == 'I'){
+				$total .= "<option value='".$ingrediente['codigo_ingrediente']."''>".$ingrediente['nombre_ingrediente']." - ".$ingrediente['unidad']. "</option>";
+			}
+
 		}
 		return $total;
 	}

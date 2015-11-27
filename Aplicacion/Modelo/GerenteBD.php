@@ -245,4 +245,28 @@
       return $datos;
     }
 
+    public function visualizarProductosCandidatos($esta){
+      $this->conectar();
+			$aux = $this->consultar("SELECT * FROM Ingrediente WHERE tipo = 'P' AND esta_en_menu = '".$esta."'");
+			$this->desconectar();
+			$datos = array();
+			while($fila=mysqli_fetch_array($aux))
+			{
+				array_push($datos,$fila);
+			}
+			return $datos;
+    }
+
+    public function visualizarRecetasCandidatas($esta){
+      $this->conectar();
+			$aux = $this->consultar("SELECT * FROM Receta WHERE esta_en_menu = '".$esta."'");
+			$this->desconectar();
+			$datos = array();
+			while($fila=mysqli_fetch_array($aux))
+			{
+				array_push($datos,$fila);
+			}
+			return $datos;
+    }
+
   }
