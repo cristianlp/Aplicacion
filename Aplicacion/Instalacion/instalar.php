@@ -213,6 +213,9 @@
 	$query = "INSERT INTO Despensa VALUES('despensa1', 'gerente1')";
 	mysqli_query($conexion,$query);
 
+	$query = "INSERT INTO Menu VALUES(NOW(), 'gerente1')";
+	mysqli_query($conexion,$query);
+
 	mysqli_close($conexion);
 
 	?>

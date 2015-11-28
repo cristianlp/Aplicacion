@@ -48,12 +48,24 @@ class Gerente extends Controlador
 		$plantilla = $this -> init();
 		$workspace = $this->leerPlantilla("Aplicacion/Vista/gerente/vistaMenu.html");
 		$gerenteBD = new GerenteBD();
+
+		$workspace = $this->reemplazar($workspace, "{{modificador}}", $this->procesarDatosMenu($gerenteBD->visualizarDatosMenu()));
 		$workspace = $this->reemplazar($workspace, "{{productos_candidatos}}", $this->procesarProductosCandidatos($gerenteBD->visualizarProductosCandidatos("N")));
 		$workspace = $this->reemplazar($workspace, "{{recetas_candidatos}}", $this->procesarRecetasCandidatos($gerenteBD->visualizarRecetasCandidatas("N")));
 		$workspace = $this->reemplazar($workspace, "{{menu_del_dia_1}}", $this->procesarProductosCandidatos($gerenteBD->visualizarProductosCandidatos("S")));
 		$workspace = $this->reemplazar($workspace, "{{menu_del_dia_2}}", $this->procesarRecetasCandidatos($gerenteBD->visualizarRecetasCandidatas("S")));
 		$plantilla = $this->reemplazar($plantilla, "{{workspace}}", $workspace);
 		$this->mostrarVista($plantilla);
+	}
+
+	public function procesarDatosMenu($datos){
+		$hoy = date("j, Y, g:i a", strtotime($datos['fecha']));
+		$mes = substr((date("F",strtotime($datos['fecha']))), 0, 3);
+		$nombres = (explode(" ", $datos['nombres']));
+		$apellidos = (explode(" ", $datos['apellidos']));
+		$n1 = $nombres[0];
+		$a1 = $apellidos[0];
+		return $mes ." ". $hoy . "<br> por: " . $n1 . " " . $a1;
 	}
 
 	public function procesarProductosCandidatos($productos){
@@ -82,17 +94,61 @@ class Gerente extends Controlador
 		<div class='mdl-shadow--2dp manito_card'>
 			<span id='codigo'>{{codigo_receta}}</span><br>
 			<span id='nombre'>{{nombre_receta}}</span>
-			<span id='codigo_enviar' class='oculto'>R-{{codigo_receta}}</span>
+			<span id='codigo_enviar' class='oculto'>R-{{codigo_receta_2}}</span>
 		</div>";
 		for($i = 0; $i< count($productos); $i++){
 			$producto = $productos[$i];
 			$tr = $modelo_fila;
 			$tr = $this->reemplazar($tr, "{{codigo_receta}}", "<b>C&oacute;digo: </b>" . $producto['codigo_receta']);
+			$tr = $this->reemplazar($tr, "{{codigo_receta_2}}",$producto['codigo_receta']);
 			$tr = $this->reemplazar($tr, "{{nombre_receta}}", "<b>Nombre: </b>" . $producto['nombre_receta']);
 			$total .= $tr;
 		}
 
 		return $total;
+	}
+
+	public function guardar_menu($datos_menu, $valor){
+
+		$plantilla = $this -> init();
+		$workspace = $this->leerPlantilla("Aplicacion/Vista/gerente/vistaMenu.html");
+		$gerenteBD = new GerenteBD();
+		$gerenteBD->sacarTodoDelMenu();
+		if($datos_menu != null ){
+			$this->registrarProductosEnMenu($datos_menu);
+		}
+
+
+		$workspace = $this->reemplazar($workspace, "{{productos_candidatos}}", $this->procesarProductosCandidatos($gerenteBD->visualizarProductosCandidatos("N")));
+		$workspace = $this->reemplazar($workspace, "{{recetas_candidatos}}", $this->procesarRecetasCandidatos($gerenteBD->visualizarRecetasCandidatas("N")));
+		$workspace = $this->reemplazar($workspace, "{{menu_del_dia_1}}", $this->procesarProductosCandidatos($gerenteBD->visualizarProductosCandidatos("S")));
+		$workspace = $this->reemplazar($workspace, "{{menu_del_dia_2}}", $this->procesarRecetasCandidatos($gerenteBD->visualizarRecetasCandidatas("S")));
+
+		if($datos_menu != null){
+			$plantilla = $this->alerta($plantilla, "Menú guardado con exito", "");
+			$gerenteBD->editar_menu($_SESSION['usuario']);
+		}else{
+			if(intval($valor)!=0 ){
+				$gerenteBD->editar_menu($_SESSION['usuario']);
+			}
+			$plantilla = $this->alerta($plantilla, "El Menú quedó vacío", "");
+		}
+		$workspace = $this->reemplazar($workspace, "{{modificador}}", $this->procesarDatosMenu($gerenteBD->visualizarDatosMenu()));
+		$plantilla = $this->reemplazar($plantilla, "{{workspace}}", $workspace);
+		$this->mostrarVista($plantilla);
+	}
+
+	public function registrarProductosEnMenu($datos){
+		$gerenteBD = new GerenteBD();
+		for($i = 0; $i < count($datos) ; $i++){
+			$codigo_completo = $datos[$i];
+			$codigo_completo = (explode("-" , $codigo_completo));
+			if($codigo_completo[0] == "R"){
+				$gerenteBD->ingresarRecetaAlMenu($codigo_completo[1]);
+			}else{
+				$gerenteBD->ingresarProductoAlMenu($codigo_completo[1]);
+			}
+		}
 	}
 
 	//DESPENSA - INGREDIENTES

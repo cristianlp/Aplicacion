@@ -83,9 +83,19 @@ function alerta (titulo, mensaje) {
 			}
 		);
 
+		var actual = ($("#left-defaults").children()) .length - 1;
+
 		$("#guardar_menu").click(function(){
-			var c = $("#left-defaults").html();
-			console.log(c);
+			var c = $("#left-defaults").children();
+			for (var i = 1; i < c.length; i++) {
+				var div = c[i];
+				var m = (div.children[3]);
+				$("#form_dinamico").append("<input type='hidden' name='datos_menu[]' value='"+ $(m).html() +"'>");
+			}
+
+			$("#form_dinamico").append("<input type='hidden' name='valor' value='"+ (actual) +"'>");
+			$("#form_dinamico").submit();
+
 		});
 
 		var ing = 2;

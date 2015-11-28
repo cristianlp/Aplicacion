@@ -1,8 +1,7 @@
 <div class="mdl-grid">
 
-  <form action="index.php" method="post">
-    <input type="text" name="tipo" value="guardar_menu">
-    <input type="text" name="datos_menu[]" value="vacio">
+  <form action="index.php" method="post" id="form_dinamico">
+    <input type="hidden" name="tipo" value="guardar_menu">
   </form>
 
   <!-- Colored FAB button with ripple -->
@@ -17,13 +16,13 @@ Guardar    </div>
 
 
   <div class="mdl-cell mdl-cell--5-col menu mdl-card mdl-shadow--2dp" id="left-defaults">
-    <label for="">Men&uacute; del d&iacute;a</label>
+    <label for="">Men&uacute; diario <br><span id="ultima_modificacion">Ult. modificacion: {{modificador}}</span></label>
       {{menu_del_dia_1}}
       {{menu_del_dia_2}}
   </div>
 
   <div class="mdl-cell mdl-cell--5-col recetas mdl-card mdl-shadow--2dp" id="right-defaults">
-    <label for="">Recetas y productos</label>
+    <label for="">Recetas <br> Productos</label>
       {{recetas_candidatos}}
       {{productos_candidatos}}
   </div>

@@ -54,6 +54,12 @@
 						$_POST["codigo_receta_ok"],$_POST["nombre_receta"],
 						$_POST['chef'], $_POST['descripcion_proceso']
 					);
+				}else if($_POST["tipo"] == "guardar_menu"){
+					$enviar = null;
+					if(isset($_POST['datos_menu'])){
+						$enviar = $_POST["datos_menu"];
+					}
+					$gerente->guardar_menu($enviar, $_POST['valor']);
 				}
 
 			}else if($_SESSION["tipo"]=="Operario"){

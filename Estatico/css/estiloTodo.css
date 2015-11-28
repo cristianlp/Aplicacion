@@ -421,7 +421,13 @@ select{
 
 #left-defaults label, #right-defaults label{
   margin: 10px auto;
+  text-align: center;
 }
 .oculto{
   display: none;
+}
+
+#ultima_modificacion{
+  font-size: 13px;
+  font-weight: normal;
 }

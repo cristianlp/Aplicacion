@@ -269,4 +269,42 @@
 			return $datos;
     }
 
+    public function sacarTodoDelMenu(){
+      $this->conectar();
+			$aux = $this->consultar("UPDATE Ingrediente SET esta_en_menu = 'N' WHERE tipo = 'P' AND esta_en_menu = 'S'");
+      $aux = $this->consultar("UPDATE Receta SET esta_en_menu = 'N' WHERE esta_en_menu = 'S'");
+			$this->desconectar();
+    }
+
+    public function ingresarRecetaAlMenu($codigo){
+      $this->conectar();
+			$aux = $this->consultar("UPDATE Receta SET esta_en_menu = 'S' WHERE codigo_receta = '".$codigo."'");
+			$this->desconectar();
+    }
+
+    public function ingresarProductoAlMenu($codigo){
+      $this->conectar();
+			$aux = $this->consultar("UPDATE Ingrediente SET esta_en_menu = 'S' WHERE tipo = 'P' AND codigo_ingrediente = '".$codigo."'");
+			$this->desconectar();
+    }
+
+    public function editar_menu($usuario){
+      $this->conectar();
+			$aux = $this->consultar("UPDATE Menu SET gerente = '".$usuario."', fecha = NOW() ");
+			$this->desconectar();
+    }
+
+    public function visualizarDatosMenu(){
+      $this->conectar();
+      $aux = $this->consultar("SELECT G.nombres, G.apellidos, m.fecha FROM Usuario G , Menu m WHERE m.gerente = G.usuario");
+      $this->desconectar();
+      $datos = array();
+      while($fila=mysqli_fetch_array($aux))
+      {
+        array_push($datos,$fila);
+      }
+      return $datos[0];
+    }
+
+
   }
