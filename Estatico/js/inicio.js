@@ -127,4 +127,35 @@ function alerta (titulo, mensaje) {
 		ing++;
 		});
 
+		var item = 2;
+		$("#itemX").attr("id","item1");
+		$("#cantidadX").attr("id","cantidad1");
+		$(".forX").attr("for","cantidad1");
+
+		$(".botoncito_agregar_item").click(function(){
+			$("#panel_agregar_ingredientes").append(
+			"<div class='mdl-grid'>"+
+				"<div class='mdl-cell mdl-cell--12-col'>"+
+					"<div class='mdl-textfield mdl-js-textfield mdl-textfield--floating-label'>"+
+						"<select name='items[]' id='itemX'> "+
+							$("#item1").html() +
+						"</select>"+
+						"<label class='mdl-textfield__label' for=''></label>"+
+					"</div>"+
+					"<div class='mdl-textfield mdl-js-textfield mdl-textfield--floating-label'>"+
+						"<input class='mdl-textfield__input any' type='number' step='any' id='cantidadX' name='cantidades[]' value='' required {{disable}} placeholder='Cantidad'> "+
+					"</div>"+
+				"</div>"+
+			"</div>"
+				);
+
+		$("#itemX").attr("id","item" + item);
+		$("#cantidadX").attr("id","cantidad" + item);
+		$(".forX").attr("for","cantidad" + item);
+		$(".any").removeAttr("pattern");
+		item++;
+		});
+
+
+
 	});

@@ -43,6 +43,9 @@ class Gerente extends Controlador
 		$this->mostrarVista($plantilla);
 	}
 
+	/*
+	*	GESTION DEL MENU
+	*/
 	public function vistaMenu()
 	{
 		$plantilla = $this -> init();
@@ -261,7 +264,9 @@ class Gerente extends Controlador
 		$this->mostrarVista($plantilla);
 	}
 
-	//EMPLEADOS
+	/*
+	*	EMPLEADOS
+	*/
 
 	public function vistaEmpleados()
 	{

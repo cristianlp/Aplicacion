@@ -4,6 +4,18 @@
   <td>{{nombre}}</td>
   <td>{{rol}}</td>
   <td>{{telefono}}</td>
+
+  <td>
+    <!-- formulario para detalles -->
+    <form action="index.php" method="post">
+      <input type="hidden" name="tipo" value="agregar_consultar_empleado">
+      <input type="hidden" value="{{usuario}}" name="parametro_busqueda">
+      <button class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored mdl-color-text--teal-500">
+      <i class="material-icons">remove_red_eye</i>
+      </button>
+    </form>
+  </td>
+
   <td>
     <!-- formulario para editar -->
     <form action="index.php" method="post">

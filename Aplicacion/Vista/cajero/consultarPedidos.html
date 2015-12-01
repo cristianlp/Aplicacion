@@ -3,11 +3,11 @@
 
 
 <form action="index.php" method="post">
-  <label for="">Codigo de receta</label>
+  <label for="">Codigo del pedido</label>
   <br>
-  <input type="hidden" name="tipo" value="agregar_consultar_receta">
+  <input type="hidden" name="tipo" value="agregar_consultar_pedido">
   <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-    <input class="mdl-textfield__input" type="text" name="codigo_receta" required="required">
+    <input class="mdl-textfield__input" type="text" name="codigo_pedido" required="required">
     <label class="mdl-textfield__label" for="sample3">Consultar, Agregar</label>
   </div>
   <!-- Colored icon button -->
@@ -25,12 +25,15 @@
     <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
       <thead>
         <tr>
-          <th class="mdl-data-table__cell--non-numeric">C&oacute;digo</th>
-          <th>Nombre</th>
-          <th>Chef que la realiz&oacute;</th>
-          <th>Est&aacute; en el men&uacute;</th>
-          <th>Procedimiento</th>
-          <th>Editar</th>
+          <th class="mdl-data-table__cell--non-numeric">Codigo pedido</th>
+          <th>Cliente</th>
+          <th>Mesero</th>
+          <th>Fecha</th>
+          <th>Valor del pedido</th>
+          <th>Estado</th>
+          <th>Detalles</th>
+          <th>Pagar</th>
+          <th>Cancelar</th>
         </tr>
       </thead>
       <tbody>
