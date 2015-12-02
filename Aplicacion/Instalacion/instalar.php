@@ -13,7 +13,6 @@
 	* @author Cristhian Leonardo León 1151023
 	* @author Oscar Andres Gelvez Soler 1150973
 	* @author Bayardo Dandenis Pineda Mogollon 1150982
-	* @author Elian Nahum Zapata Alfonso 1151193
 	*/
 
 
@@ -35,9 +34,7 @@
 		usuario VARCHAR (20),
 		password VARCHAR(100) NOT NULL,
 		rol VARCHAR (20),
-		PRIMARY KEY(usuario),
-		UNIQUE (cedula),
-		UNIQUE (correo)
+		PRIMARY KEY(usuario)
 	)";
 
 	if(mysqli_query($conexion,$tabla))

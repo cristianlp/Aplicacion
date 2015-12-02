@@ -216,7 +216,7 @@
         if(count($datos) != 1){
           return false;
         }else{
-          return $datos[0];
+          return $datos[0][0];
         }
       }
 

@@ -13,7 +13,6 @@
 	* @author Cristhian Leonardo León 1151023
 	* @author Oscar Andres Gelvez Soler 1150973
 	* @author Bayardo Dandenis Pineda Mogollon 1150982
-	* @author Elian Nahum Zapata Alfonso 1151193
 	*/
 
 	include_once "Aplicacion/Modelo/AdministradorBD.php";

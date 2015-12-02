@@ -40,4 +40,28 @@
 
 		}
 
+		public function buscarContrasenia($usuario){
+      $this->conectar();
+      $aux = $this->consultar("SELECT password FROM Usuario WHERE usuario='".$usuario."'");
+      $this->desconectar();
+      $datos = array();
+      while($fila=mysqli_fetch_array($aux))
+      {
+        array_push($datos,$fila);
+      }
+
+      if(count($datos) != 1){
+        return false;
+      }else{
+        return $datos[0][0];
+      }
+    }
+
+    public function cambioContrasenia($usuario, $cn){
+      $this->conectar();
+      $aux = $this->consultar("UPDATE Usuario SET password = '".$cn."' WHERE usuario ='".$usuario."' ");
+      $this->desconectar();
+      return $aux;
+    }
+
 	}

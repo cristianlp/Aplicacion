@@ -60,6 +60,8 @@ if(isset($_SESSION["rol"])){
 		$enviar = $_POST["datos_menu"];
 	}
 	$gerente->guardar_menu($enviar, $_POST['valor']);
+}else if($_POST['tipo'] == "cambiar_contrasenia"){
+	$gerente->cambiar_contrasenia($_POST["contra_actual"], $_POST["contra_nueva"], $_POST["confir_contra"], $_SESSION["usuario"]);
 }
 
 }else if($_SESSION["rol"]=="Cajero"){
@@ -77,6 +79,8 @@ if(isset($_SESSION["rol"])){
 	$cajero->cancelarPedido($_POST['codigo_pedido']);
 }else if($_POST['tipo'] == "consultar_venta"){
 	$cajero->consultarVenta($_POST['codigo_pedido']);
+}else if($_POST['tipo'] == "cambiar_contrasenia"){
+	$cajero->cambiar_contrasenia($_POST["contra_actual"], $_POST["contra_nueva"], $_POST["confir_contra"], $_SESSION["usuario"]);
 }
 
 }else if($_SESSION["rol"]=="Chef"){
@@ -85,6 +89,8 @@ if(isset($_SESSION["rol"])){
 		$chef->cocinarPedido($_POST["codigo_pedido"]);
 	}else if($_POST['tipo'] == "consultar_pedido"){
 		$chef->consultarPedido($_POST["codigo_pedido"]);
+	}else if($_POST['tipo'] == "cambiar_contrasenia"){
+		$chef->cambiar_contrasenia($_POST["contra_actual"], $_POST["contra_nueva"], $_POST["confir_contra"], $_SESSION["usuario"]);
 	}
 }
 
@@ -182,6 +188,8 @@ if(isset($_SESSION["rol"])){
 			$_SESSION['usuario'] = false;
 			session_destroy();
 			header('location: index.php');
+		}else if($_GET['accion'] == 'cambiar_password'){
+			$chef->vistaCambioPassword();
 		}
 
 	}else{

@@ -2,6 +2,7 @@
 
 require_once "Aplicacion/Controlador/Controlador.php";
 include_once "Aplicacion/Modelo/CajeroBD.php";
+include_once "Aplicacion/Modelo/AdministradorBD.php";
 
 class Cajero extends Controlador
 {
@@ -118,6 +119,13 @@ class Cajero extends Controlador
 			$this->mostrarVista($plantilla);
 
 		}
+	}
+	public function vistaCambioPassword()
+	{
+		$plantilla = $this -> init();
+		$workspace = $this->leerPlantilla("Aplicacion/Vista/principal/cambioPassword.html");
+		$plantilla = $this->reemplazar($plantilla, "{{workspace}}", $workspace);
+		$this->mostrarVista($plantilla);
 	}
 
 	public function procesarConsultaMeserosPedido($meseros){
@@ -299,6 +307,58 @@ class Cajero extends Controlador
 			$plantilla = $this->cargarConsultaVentas();
 			$plantilla=$this->alerta($plantilla, "Ese código de venta no existe-Digite un codigo distinto", "info");
 		}
+		$this->mostrarVista($plantilla);
+
+	}
+
+	public function cambiar_contrasenia($contra_actual, $contra_nueva, $confir_contra, $usuario){
+		$ca = $this->encriptarPassword($contra_actual);
+		$cn = $this->encriptarPassword($contra_nueva);
+		$ccn = $this->encriptarPassword($confir_contra);
+
+
+		if($cn != $ccn){
+			$plantilla = $this -> init();
+			$workspace = $this->leerPlantilla("Aplicacion/Vista/principal/cambioPassword.html");
+			$plantilla = $this->reemplazar($plantilla, "{{workspace}}", $workspace);
+			$plantilla = $this->alerta($plantilla, "Las contraseñas no coinciden-Verfique que sean iguales", "info");
+			$this->mostrarVista($plantilla);
+			return;
+		}
+
+		$administradorBD = new AdministradorBD();
+		$contr_sistema = $administradorBD->buscarContrasenia($usuario);
+		if($contr_sistema != $ca){
+			$plantilla = $this -> init();
+			$workspace = $this->leerPlantilla("Aplicacion/Vista/principal/cambioPassword.html");
+			$plantilla = $this->reemplazar($plantilla, "{{workspace}}", $workspace);
+			$plantilla = $this->alerta($plantilla, "Su contraseña y usuario no coinciden-Verfique sus datos e intentelo de nuevo", "info");
+			$this->mostrarVista($plantilla);
+			return;
+		}
+
+		if($contr_sistema == $cn){
+			$plantilla = $this -> init();
+			$workspace = $this->leerPlantilla("Aplicacion/Vista/principal/cambioPassword.html");
+			$plantilla = $this->reemplazar($plantilla, "{{workspace}}", $workspace);
+			$plantilla = $this->alerta($plantilla, "Esa contraseña ya ha sido usada-Por la seguridad de sus datos digite una contraseña diferente", "info");
+			$this->mostrarVista($plantilla);
+			return;
+		}
+
+		$ok = $administradorBD->cambioContrasenia($usuario, $cn);
+		if($ok){
+			$plantilla = $this -> init();
+			$workspace = $this->leerPlantilla("Aplicacion/Vista/principal/cambioPassword.html");
+			$plantilla = $this->reemplazar($plantilla, "{{workspace}}", $workspace);
+			$plantilla = $this->alerta($plantilla, "La contraseña se ha cambiado exitosamente", "success");
+		}else{
+			$plantilla = $this -> init();
+			$workspace = $this->leerPlantilla("Aplicacion/Vista/principal/cambioPassword.html");
+			$plantilla = $this->reemplazar($plantilla, "{{workspace}}", $workspace);
+			$plantilla = $this->alerta($plantilla, "La contraseña no se ha podido cambiar", "error");
+		}
+		
 		$this->mostrarVista($plantilla);
 
 	}
