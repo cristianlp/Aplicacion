@@ -1,5 +1,20 @@
-function alerta (titulo, mensaje) {
-		swal(titulo, mensaje);
+function alerta (mensaje, tipo) {
+		//swal(mensaje, "" ,tipo);
+
+		if(tipo == "info"){
+			var mensaje = mensaje.split("-")
+		swal({ title: mensaje[0],   text: mensaje[1],   timer: 3500,   showConfirmButton: false });
+		return;
+		}
+
+		if(tipo == "success"){
+			swal(mensaje, "", "success");
+		}
+
+		if(tipo == "error"){
+			swal(mensaje, "", "error");
+		}
+
 	}
 
 	function shake(dom){

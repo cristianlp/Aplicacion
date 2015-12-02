@@ -3,13 +3,15 @@
 
 
 <form action="index.php" method="post">
-  <label for="">Codigo del pedido</label>
+  <label for="">C&oacute;digo del pedido</label>
   <br>
   <input type="hidden" name="tipo" value="agregar_consultar_pedido">
   <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-    <input class="mdl-textfield__input" type="text" name="codigo_pedido" required="required">
+    <input class="mdl-textfield__input" id="digite" type="text" name="codigo_pedido" required="required">
     <label class="mdl-textfield__label" for="sample3">Consultar, Agregar</label>
   </div>
+   <div class="mdl-tooltip mdl-tooltip--large" for="digite">
+En este campo puede consultar o registrar pedidos</div>
   <!-- Colored icon button -->
   <button class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored">
     <i class="material-icons">search</i>
@@ -25,7 +27,7 @@
     <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
       <thead>
         <tr>
-          <th class="mdl-data-table__cell--non-numeric">Codigo pedido</th>
+          <th class="mdl-data-table__cell--non-numeric">C&oacute;digo pedido</th>
           <th>Cliente</th>
           <th>Mesero</th>
           <th>Fecha</th>

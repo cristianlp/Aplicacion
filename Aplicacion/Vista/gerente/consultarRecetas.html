@@ -3,13 +3,15 @@
 
 
 <form action="index.php" method="post">
-  <label for="">Codigo de receta</label>
+  <label for="">C&oacute;digo de receta</label>
   <br>
   <input type="hidden" name="tipo" value="agregar_consultar_receta">
   <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-    <input class="mdl-textfield__input" type="text" name="codigo_receta" required="required">
+    <input class="mdl-textfield__input" id="digite" type="text" name="codigo_receta" required="required">
     <label class="mdl-textfield__label" for="sample3">Consultar, Agregar</label>
   </div>
+   <div class="mdl-tooltip mdl-tooltip--large" for="digite">
+En este campo puede consultar o registrar recetas</div>
   <!-- Colored icon button -->
   <button class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored">
     <i class="material-icons">search</i>

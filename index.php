@@ -68,20 +68,23 @@ if(isset($_SESSION["rol"])){
 		$cajero->agregar_consultar_pedido($_POST["codigo_pedido"]);
 	}if($_POST['tipo'] == "agregarPedido"){
 		$cajero->agregar_pedido($_POST["codigo_pedido"], $_POST["cliente"],
-		$_POST["mesero"], $_POST["codigo_pedido"], $_POST["items"], $_POST['cantidades'], array("I", "I", "R"),
-		$_POST["valor"]
+		$_POST["mesero"], $_POST["codigo_pedido"], $_POST["items"],
+		$_POST['cantidades'], $_POST["valor"]
 	);
 }else if($_POST['tipo'] == "pagarPedido"){
 	$cajero->pagarPedido($_POST['codigo_pedido']);
 }else if($_POST['tipo'] == "cancelarPedido"){
 	$cajero->cancelarPedido($_POST['codigo_pedido']);
+}else if($_POST['tipo'] == "consultar_venta"){
+	$cajero->consultarVenta($_POST['codigo_pedido']);
 }
 
 }else if($_SESSION["rol"]=="Chef"){
 	$chef = new Chef();
 	if($_POST['tipo'] == "cocinarPedido"){
-		echo "mama";
 		$chef->cocinarPedido($_POST["codigo_pedido"]);
+	}else if($_POST['tipo'] == "consultar_pedido"){
+		$chef->consultarPedido($_POST["codigo_pedido"]);
 	}
 }
 
@@ -157,6 +160,10 @@ if(isset($_SESSION["rol"])){
 
 			case "pedidos":
 			$cajero->vistaPedidos();
+			break;
+
+			case "ventas":
+			$cajero->vistaVentas();
 			break;
 		}//fin del switch
 

@@ -89,10 +89,14 @@ class Cajero extends Controlador
 		$workspace = "";
 		if($datos != false){
 			$workspace = $this->leerPlantilla("Aplicacion/Vista/cajero/detalles_pedido.html");
+			$workspace = $this->reemplazar($workspace, "{{goBack}}", "pedidos");
 			$workspace = $this->reemplazar($workspace, "{{codigo_pedido}}", $datos[0]);
-			$workspace = $this->reemplazar($workspace, "{{cliente}}", $datos[1] . "" . $datos[2]);
-			$workspace = $this->reemplazar($workspace, "{{mesero}}", $datos[3]. "" .$datos[4] );
-			$workspace = $this->reemplazar($workspace, "{{fecha}}", $datos[5] );
+			$workspace = $this->reemplazar($workspace, "{{cliente}}", $datos[1] . " " . $datos[2]);
+			$workspace = $this->reemplazar($workspace, "{{mesero}}", $datos[3]. " " .$datos[4] );
+
+			$hoy = date("j, Y, g:i a", strtotime($datos[5]));
+			$mes = substr((date("F",strtotime($datos[5]))), 0 ,3);
+			$workspace = $this->reemplazar($workspace, "{{fecha}}", $mes . " " . $hoy );
 			$workspace = $this->reemplazar($workspace, "{{valor}}", $datos[6] );
 			$workspace = $this->reemplazar($workspace, "{{estado}}", $datos[7] );
 			$workspace = $this->reemplazar($workspace, "{{items}}", $this->procesarConsultaItemsPedido($codigo_pedido) );
@@ -129,12 +133,12 @@ class Cajero extends Controlador
 		$total = "";
 		for($i = 0; $i < count($datos[0]); $i++){
 			$dato = $datos[0][$i];
-			$total .= "<option value='".$dato['codigo_ingrediente']."' data='I'>".$dato['nombre_ingrediente']." - m&aacute;ximo " .$dato['cantidad']." ". $dato['unidad'] ."</option>";
+			$total .= "<option value='I/".$dato['codigo_ingrediente']."' data='I'>".$dato['nombre_ingrediente']." - m&aacute;ximo " .$dato['cantidad']." ". $dato['unidad'] ."</option>";
 		}
 
 		for($i = 0; $i < count($datos[1]); $i++){
 			$dato = $datos[1][$i];
-			$total .= "<option value='".$dato['codigo_receta']."'' data='R'>".$dato['nombre_receta'] ."</option>";
+			$total .= "<option value='R/".$dato['codigo_receta']."'' data='R'>".$dato['nombre_receta'] ."</option>";
 		}
 		return $total;
 	}
@@ -159,32 +163,61 @@ class Cajero extends Controlador
 	}
 
 	public function  agregar_pedido($codigo_pedido, $cliente,
-	$mesero, $codigo_pedido, $items, $cantidades, $data, $valor){
+	$mesero, $codigo_pedido, $items, $cantidades, $valor){
 		$cajeroBD = new CajeroBD();
 		$esta = $cajeroBD->estaCliente($cliente);
 		if($esta == false){
-			$cajeroBD->registrarClientePresencial($cliente);
-		}
-
-		$ok = $cajeroBD->registarPedido($codigo_pedido, $cliente, $mesero, $valor);
-
-		for($i = 0; $i<count($cantidades); $i++){
-			if($data[$i] == "R") {
-				$cajeroBD->registrarReceta_Pedido($items[$i], $codigo_pedido, $cantidades[$i]);
-			}else{
-				$cajeroBD->registrarIngrediente_Pedido($items[$i], $codigo_pedido, $cantidades[$i]);
-				$cajeroBD->restarExistenciaIngrediente($items[$i], $cantidades[$i]);
+			$aux = $cajeroBD->registrarClientePresencial($cliente);
+			if($aux == false){
+				$ok = false;
+				$p= true;
+				goto etiqueta;
 			}
 		}
 
+		$ok = $cajeroBD->registarPedido($codigo_pedido, $cliente, $mesero, $valor);
+		$p = true;
+		for($i = 0; $i<count($cantidades); $i++){
+			$datos_item = explode("/", $items[$i]);
+			if($datos_item[0] == "R") {
+				$cajeroBD->registrarReceta_Pedido($datos_item[1], $codigo_pedido, $cantidades[$i]);
+			}else{
+				if($this->preguntarSiPuedeRestar($datos_item[1], $cantidades[$i])){
+					$cajeroBD->registrarIngrediente_Pedido($datos_item[1], $codigo_pedido, $cantidades[$i]);
+					$cajeroBD->restarExistenciaIngrediente($datos_item[1], $cantidades[$i]);
+					
+				}else{
+					$cajeroBD->eliminarPedido($codigo_pedido);
+					$ok = false;
+					$p = false;
+					break;
+				}
+				
+			}
+		}
+
+		etiqueta:
 		$plantilla = $this->cargarConsultaPedidos();
 		if($ok){
-			$plantilla=$this->alerta($plantilla, "Pedido registrado exitosamente", "");
+			$plantilla=$this->alerta($plantilla, "Pedido registrado exitosamente", "success");
 		}else{
-			$plantilla=$this->alerta($plantilla, "No se pudo registrar el pedido", "");
+			if($p == false){
+				$plantilla=$this->alerta($plantilla, "Las cantidades no son suficientes para hacer este pedido", "error");
+			}else{
+				$plantilla=$this->alerta($plantilla, "No se pudo registrar el pedido", "error");
+			}
 		}
 		$this->mostrarVista($plantilla);
 
+	}
+
+	private function preguntarSiPuedeRestar($codigo_item, $cantidad){
+		$cajeroBD = new CajeroBD();
+		$cant = $cajeroBD->buscarCantidadDeIngrediente($codigo_item);
+		if($cantidad <= $cant ){
+			return true;
+		}
+		return false;
 	}
 
 	public function pagarPedido($codigo_pedido){
@@ -192,7 +225,7 @@ class Cajero extends Controlador
 		$cajeroBD = new CajeroBD();
 		$cajeroBD->pagarPedido($codigo_pedido);
 		$plantilla = $this->cargarConsultaPedidos();
-		$plantilla=$this->alerta($plantilla, "El pedido se ha pagado correctamente", "");
+		$plantilla=$this->alerta($plantilla, "El pedido se ha pagado correctamente", "success");
 		$this->mostrarVista($plantilla);
 	}
 
@@ -201,13 +234,72 @@ class Cajero extends Controlador
 		$cajeroBD = new CajeroBD();
 		$cajeroBD->cancelarPedido($codigo_pedido);
 		$plantilla = $this->cargarConsultaPedidos();
-		$plantilla=$this->alerta($plantilla, "El pedido se ha cancelado.", "");
+		$plantilla=$this->alerta($plantilla, "El pedido se ha cancelado-Recuerde que los pedidos cancelados los podrá ver algún administrador", "info");
 		$this->mostrarVista($plantilla);
 	}
 
 	public function vistaVentas(){
-
+		$plantilla = $this->cargarConsultaVentas();
+		$this->mostrarVista($plantilla);
 	}
 
+	private function cargarConsultaVentas(){
+		$cajeroBD = new CajeroBD();
+		$pedidos = $cajeroBD->visualizarVentas();
 
+		$plantilla = $this->init();
+		$workspace = $this->leerPlantilla("Aplicacion/Vista/cajero/consultarVentas.html");
+		$plantilla = $this->procesarConsultaVentas($plantilla, $workspace, $pedidos);
+		return $plantilla;
+	}
+
+	public function procesarConsultaVentas($plantilla, $workspace, $datos)
+	{
+		$total = "";
+		$filaModelo = $this->leerPlantilla("Aplicacion/Vista/cajero/fila_venta.html");
+		for($i = 0; $i < count($datos); $i++){
+			$tr = $filaModelo;
+			$pedido = $datos[$i];
+			$tr = $this->reemplazar($tr, "{{codigo_pedido}}", $pedido['codigo_pedido']);
+			$tr = $this->reemplazar($tr, "{{cliente}}", $pedido['cliente']);
+			$tr = $this->reemplazar($tr, "{{mesero}}", $pedido['mesero']);
+
+			$hoy = date("j, Y, g:i a", strtotime($pedido['fecha']));
+			$mes = substr((date("F",strtotime($pedido['fecha']))), 0 ,3);
+			$tr = $this->reemplazar($tr, "{{fecha}}", $mes . " " . $hoy);
+
+			$tr = $this->reemplazar($tr, "{{valor}}", $pedido['valor']);
+			$tr = $this->reemplazar($tr, "{{estado}}", $pedido['estado']);
+			$total .= $tr;
+		}
+		$workspace = $this->reemplazar($workspace, "{{cuerpo_tabla}}", $total);
+		return $this->reemplazar($plantilla, "{{workspace}}", $workspace);
+	}
+
+	public function consultarVenta($codigo_pedido){
+		$cajeroBD = new CajeroBD();
+		$plantilla = $this->init();
+		$datos = $cajeroBD->buscarVenta($codigo_pedido);
+		if($datos != false){
+			$workspace = $this->leerPlantilla("Aplicacion/Vista/cajero/detalles_pedido.html");
+			$workspace = $this->reemplazar($workspace, "{{goBack}}", "ventas");
+			$workspace = $this->reemplazar($workspace, "{{codigo_pedido}}", $datos[0]);
+			$workspace = $this->reemplazar($workspace, "{{cliente}}", $datos[1] . " " . $datos[2]);
+			$workspace = $this->reemplazar($workspace, "{{mesero}}", $datos[3]. " " .$datos[4] );
+
+			$hoy = date("j, Y, g:i a", strtotime($datos[5]));
+			$mes = substr((date("F",strtotime($datos[5]))), 0 ,3);
+			$workspace = $this->reemplazar($workspace, "{{fecha}}", $mes . " " . $hoy );
+			$workspace = $this->reemplazar($workspace, "{{valor}}", $datos[6] );
+			$workspace = $this->reemplazar($workspace, "{{estado}}", $datos[7] );
+			$workspace = $this->reemplazar($workspace, "{{items}}", $this->procesarConsultaItemsPedido($codigo_pedido) );
+			$plantilla = $this->reemplazar($plantilla, "{{workspace}}", $workspace);
+			$this->mostrarVista($plantilla);
+		}else{
+			$plantilla = $this->cargarConsultaVentas();
+			$plantilla=$this->alerta($plantilla, "Ese código de venta no existe-Digite un codigo distinto", "info");
+		}
+		$this->mostrarVista($plantilla);
+
+	}
 }

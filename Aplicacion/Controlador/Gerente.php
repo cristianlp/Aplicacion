@@ -128,13 +128,13 @@ class Gerente extends Controlador
 		$workspace = $this->reemplazar($workspace, "{{menu_del_dia_2}}", $this->procesarRecetasCandidatos($gerenteBD->visualizarRecetasCandidatas("S")));
 
 		if($datos_menu != null){
-			$plantilla = $this->alerta($plantilla, "Menú guardado con exito", "");
+			$plantilla = $this->alerta($plantilla, "Menú guardado con éxito", "success");
 			$gerenteBD->editar_menu($_SESSION['usuario']);
 		}else{
 			if(intval($valor)!=0 ){
 				$gerenteBD->editar_menu($_SESSION['usuario']);
 			}
-			$plantilla = $this->alerta($plantilla, "El Menú quedó vacío", "");
+			$plantilla = $this->alerta($plantilla, "El Menú quedó vacío-Procure poner algo en el menú diario", "info");
 		}
 		$workspace = $this->reemplazar($workspace, "{{modificador}}", $this->procesarDatosMenu($gerenteBD->visualizarDatosMenu()));
 		$plantilla = $this->reemplazar($plantilla, "{{workspace}}", $workspace);
@@ -203,16 +203,23 @@ class Gerente extends Controlador
 		$gerenteBD = new GerenteBD();
 		$plantilla = $this->init();
 
-		$workspace = $this->leerPlantilla("Aplicacion/Vista/gerente/registro_ingrediente.html");
-		$workspace = $this->reemplazar($workspace, "{{codigo_ingrediente}}", $codigo_ingrediente);
-		$workspace = $this->reemplazar($workspace, "{{mensaje_encabezado}}", "Agregar un ingrediente");
-		$workspace = $this->reemplazar($workspace, "{{tipo}}", "agregarIngrediente");
-		$workspace = $this->reemplazar($workspace, "{{nombre_ingrediente}}", "");
-		$workspace = $this->reemplazar($workspace, "{{cantidad}}", "");
-		$workspace = $this->reemplazar($workspace, "{{unidad}}", "");
-		$workspace = $this->reemplazar($workspace, "{{nombre_boton}}", "Registrar");
+		$esta = $gerenteBD->estaIngrediente($codigo_ingrediente);
+		if($esta){
+			$plantilla = $this->cargarConsultaIngredientes();
+			$plantilla = $this->alerta($plantilla, "No se puede registrar ese ingrediente-Digite otro código de ingrediente", "info");
+		}else{
+			$workspace = $this->leerPlantilla("Aplicacion/Vista/gerente/registro_ingrediente.html");
+			$workspace = $this->reemplazar($workspace, "{{codigo_ingrediente}}", $codigo_ingrediente);
+			$workspace = $this->reemplazar($workspace, "{{mensaje_encabezado}}", "Agregar un ingrediente");
+			$workspace = $this->reemplazar($workspace, "{{tipo}}", "agregarIngrediente");
+			$workspace = $this->reemplazar($workspace, "{{nombre_ingrediente}}", "");
+			$workspace = $this->reemplazar($workspace, "{{cantidad}}", "");
+			$workspace = $this->reemplazar($workspace, "{{unidad}}", "");
+			$workspace = $this->reemplazar($workspace, "{{nombre_boton}}", "Registrar");
+			$plantilla = $this->reemplazar($plantilla, "{{workspace}}", $workspace);
+		}
 
-		$plantilla = $this->reemplazar($plantilla, "{{workspace}}", $workspace);
+		
 		$this->mostrarVista($plantilla);
 	}
 
@@ -221,11 +228,11 @@ class Gerente extends Controlador
 		$ok = $gerenteBD->registrar_ingrediente($codigo, $nombre, $cantidad, $unidad, $tipo);
 		if($ok){
 			$plantilla = $this->cargarConsultaIngredientes();
-			$plantilla = $this->alerta($plantilla, "Registro Exitoso", "");
+			$plantilla = $this->alerta($plantilla, "Registro éxitoso", "success");
 			$this->mostrarVista($plantilla);
 		}else{
 			$plantilla = $this->cargarConsultaIngredientes();
-			$plantilla = $this->alerta($plantilla, "Registro No Exitoso", "Por favor verifique que los datos ingresados sean validos");
+			$plantilla = $this->alerta($plantilla, "Registro no fué éxitoso", "error");
 			$this->mostrarVista($plantilla);
 		}
 	}
@@ -257,9 +264,9 @@ class Gerente extends Controlador
 
 		$plantilla = $this->cargarConsultaIngredientes();
 		if($ok){
-			$plantilla=$this->alerta($plantilla, "Edicion exitosa", "");
+			$plantilla=$this->alerta($plantilla, "Edición éxitosa", "success");
 		}else{
-			$plantilla=$this->alerta($plantilla, "No se pudo realizar la edicion", "Por favor revisar los datos ingresados.");
+			$plantilla=$this->alerta($plantilla, "No se pudo realizar la edición", "error");
 		}
 		$this->mostrarVista($plantilla);
 	}
@@ -369,12 +376,12 @@ class Gerente extends Controlador
 			$workspace = $this->leerPlantilla("Aplicacion/Vista/gerente/detallesEmpleado.html");
 			$cuerpo_tabla = "
 			<tr><td><strong>Usuario </strong></td><td>".$datos['usuario']."</td></tr>
-			<tr><td><strong>Cedula </strong></td><td>".$datos['cedula']."</td></tr>
+			<tr><td><strong>C&eacute;dula </strong></td><td>".$datos['cedula']."</td></tr>
 			<tr><td><strong>Nombres </strong></td><td>".$datos['nombres']."</td></tr>
 			<tr><td><strong>Apellidos </strong></td><td>".$datos['apellidos']."</td></tr>
 			<tr><td><strong>Correo </strong></td><td>".$datos['correo']."</td></tr>
-			<tr><td><strong>Telefono </strong></td><td>".$datos['telefono']."</td></tr>
-			<tr><td><strong>Direccion </strong></td><td>".$datos['direccion']."</td></tr>";
+			<tr><td><strong>Tel&eacute;fono </strong></td><td>".$datos['telefono']."</td></tr>
+			<tr><td><strong>Direcci&oacute;n </strong></td><td>".$datos['direccion']."</td></tr>";
 			$workspace = $this->reemplazar($workspace, "{{rol}}", $datos['rol']);
 			$workspace = $this->reemplazar($workspace, "{{cuerpo_tabla}}", $cuerpo_tabla );
 			$plantilla = $this->reemplazar($plantilla, "{{workspace}}", $workspace);
@@ -391,11 +398,11 @@ class Gerente extends Controlador
 		$correo, $telefono, $direccion, $rol, $password2);
 		if($ok){
 			$plantilla = $this->cargarRegistroEmpleado();
-			$plantilla = $this->alerta($plantilla, "Registro Exitoso", "");
+			$plantilla = $this->alerta($plantilla, "Registro éxitoso", "success");
 			$this->mostrarVista($plantilla);
 		}else{
 			$plantilla = $this->cargarRegistroEmpleado();
-			$plantilla = $this->alerta($plantilla, "Registro No Exitoso", "Por favor verifique que los datos ingresados sean validos");
+			$plantilla = $this->alerta($plantilla, "Registro no fué éxitoso", "error");
 			$this->mostrarVista($plantilla);
 		}
 	}
@@ -458,9 +465,9 @@ class Gerente extends Controlador
 
 		$plantilla = $this->cargarConsultaEmpleados();
 		if($ok){
-			$plantilla=$this->alerta($plantilla, "Edicion exitosa", "");
+			$plantilla=$this->alerta($plantilla, "Edición éxitosa", "success");
 		}else{
-			$plantilla=$this->alerta($plantilla, "No se pudo realizar la edicion", "Por favor revisar los datos ingresados.");
+			$plantilla=$this->alerta($plantilla, "No se pudo realizar la edición", "error");
 		}
 		$this->mostrarVista($plantilla);
 	}
@@ -470,9 +477,9 @@ class Gerente extends Controlador
 		$ok = $gerente->eliminarEmpleado($usuario);
 		$plantilla = $this->cargarConsultaEmpleados();
 		if($ok){
-			$plantilla=$this->alerta($plantilla, "Empleado eliminado exitosamente", "");
+			$plantilla=$this->alerta($plantilla, "Empleado eliminado éxitosamente", "success");
 		}else{
-			$plantilla=$this->alerta($plantilla, "No se pudo eliminar el Empleado", "");
+			$plantilla=$this->alerta($plantilla, "No se pudo eliminar el Empleado", "error");
 		}
 		$this->mostrarVista($plantilla);
 	}
@@ -591,9 +598,9 @@ class Gerente extends Controlador
 		}
 		$plantilla = $this->cargarConsultaRecetas();
 		if($ok){
-			$plantilla=$this->alerta($plantilla, "Receta registrada exitosamente", "");
+			$plantilla=$this->alerta($plantilla, "Receta registrada éxitosamente", "success");
 		}else{
-			$plantilla=$this->alerta($plantilla, "No se pudo registrar la receta", "");
+			$plantilla=$this->alerta($plantilla, "No se pudo registrar la receta", "error");
 		}
 		$this->mostrarVista($plantilla);
 
@@ -629,9 +636,9 @@ class Gerente extends Controlador
 
 		$plantilla = $this->cargarConsultaRecetas();
 		if($ok){
-			$plantilla=$this->alerta($plantilla, "Edicion exitosa", "");
+			$plantilla=$this->alerta($plantilla, "Edición éxitosa", "success");
 		}else{
-			$plantilla=$this->alerta($plantilla, "No se pudo realizar la edicion", "Por favor revisar los datos ingresados.");
+			$plantilla=$this->alerta($plantilla, "No se pudo realizar la edición", "error");
 		}
 		$this->mostrarVista($plantilla);
 	}
@@ -639,18 +646,59 @@ class Gerente extends Controlador
 	//PEDIDOS
 	public function vistaPedidos()
 	{
-		$plantilla = $this -> init();
-		$workspace = $this->leerPlantilla("Aplicacion/Vista/gerente/vistaPedidos.html");
-		$plantilla = $this->reemplazar($plantilla, "{{workspace}}", $workspace);
+		$plantilla = $this->cargarConsultaPedidos();
 		$this->mostrarVista($plantilla);
 	}
 
 	//VENTAS
 	public function vistaVentas()
 	{
-		$plantilla = $this -> init();
-		$workspace = $this->leerPlantilla("Aplicacion/Vista/gerente/vistaVentas.html");
-		$plantilla = $this->reemplazar($plantilla, "{{workspace}}", $workspace);
+		$plantilla = $this->cargarConsultaVentas();
 		$this->mostrarVista($plantilla);
+	}
+
+	private function cargarConsultaVentas(){
+		$gerenteBD = new GerenteBD();
+		$pedidos = $gerenteBD->visualizarVentas();
+
+		$plantilla = $this->init();
+		$workspace = $this->leerPlantilla("Aplicacion/Vista/gerente/consultaPedidos.html");
+		$workspace = $this->reemplazar($workspace, "{{titulo}}", "Ventas");
+		$plantilla = $this->procesarConsultaVentas($plantilla, $workspace, $pedidos, "V");
+		return $plantilla;
+	}
+
+	private function cargarConsultaPedidos(){
+		$gerenteBD = new GerenteBD();
+		$pedidos = $gerenteBD->visualizarPedidos();
+
+		$plantilla = $this->init();
+		$workspace = $this->leerPlantilla("Aplicacion/Vista/gerente/consultaPedidos.html");
+		$workspace = $this->reemplazar($workspace, "{{titulo}}", "Pedidos");
+		$plantilla = $this->procesarConsultaVentas($plantilla, $workspace, $pedidos);
+		return $plantilla;
+	}
+
+	public function procesarConsultaVentas($plantilla, $workspace, $datos)
+	{
+		$total = "";
+		$filaModelo = $this->leerPlantilla("Aplicacion/Vista/gerente/fila_pedido.html");
+		for($i = 0; $i < count($datos); $i++){
+			$tr = $filaModelo;
+			$pedido = $datos[$i];
+			$tr = $this->reemplazar($tr, "{{codigo_pedido}}", $pedido['codigo_pedido']);
+			$tr = $this->reemplazar($tr, "{{cliente}}", $pedido['cliente']);
+			$tr = $this->reemplazar($tr, "{{mesero}}", $pedido['mesero']);
+
+			$hoy = date("j, Y, g:i a", strtotime($pedido['fecha']));
+			$mes = substr((date("F",strtotime($pedido['fecha']))), 0 ,3);
+			$tr = $this->reemplazar($tr, "{{fecha}}", $mes . " " . $hoy);
+
+			$tr = $this->reemplazar($tr, "{{valor}}", $pedido['valor']);
+			$tr = $this->reemplazar($tr, "{{estado}}", $pedido['estado']);
+			$total .= $tr;
+		}
+		$workspace = $this->reemplazar($workspace, "{{cuerpo_tabla}}", $total);
+		return $this->reemplazar($plantilla, "{{workspace}}", $workspace);
 	}
 }

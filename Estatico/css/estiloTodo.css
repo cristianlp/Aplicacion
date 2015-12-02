@@ -431,3 +431,6 @@ select{
   font-size: 13px;
   font-weight: normal;
 }
+.margin-center-plus{
+  margin-left: 250px;
+}

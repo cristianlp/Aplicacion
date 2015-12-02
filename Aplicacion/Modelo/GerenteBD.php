@@ -137,7 +137,7 @@
 
     public function visualizarIngredientes(){
       $this->conectar();
-      $aux = $this->consultar("SELECT * FROM Ingrediente");
+      $aux = $this->consultar("SELECT * FROM Ingrediente ORDER BY esta_en_menu DESC");
       $this->desconectar();
       $datos = array();
       while($fila=mysqli_fetch_array($aux))
@@ -304,6 +304,47 @@
         array_push($datos,$fila);
       }
       return $datos[0];
+    }
+
+    public function visualizarPedidos(){
+      $this->conectar();
+			$aux = $this->consultar("SELECT * FROM Pedido WHERE estado <> 'pagado' ORDER BY fecha ASC ");
+			$this->desconectar();
+			$datos = array();
+			while($fila=mysqli_fetch_array($aux))
+			{
+				array_push($datos,$fila);
+			}
+			return $datos;
+    }
+
+    public function visualizarVentas(){
+      $this->conectar();
+			$aux = $this->consultar("SELECT * FROM Pedido WHERE estado = 'pagado' ORDER BY fecha ASC ");
+			$this->desconectar();
+			$datos = array();
+			while($fila=mysqli_fetch_array($aux))
+			{
+				array_push($datos,$fila);
+			}
+			return $datos;
+    }
+
+    public function estaIngrediente($codigo_ingrediente){
+      $this->conectar();
+      $aux = $this->consultar("SELECT * FROM Ingrediente WHERE codigo_ingrediente = '".$codigo_ingrediente."' ");
+      $this->desconectar();
+      $datos = array();
+      while($fila=mysqli_fetch_array($aux))
+      {
+        array_push($datos,$fila);
+      }
+
+      if(count($datos) != 1){
+        return false;
+      }else{
+        return true;
+      }
     }
 
 

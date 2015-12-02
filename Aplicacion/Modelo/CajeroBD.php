@@ -18,6 +18,18 @@
 			return $datos;
     }
 
+    public function visualizarVentas(){
+      $this->conectar();
+			$aux = $this->consultar("SELECT * FROM Pedido WHERE estado = 'pagado' ORDER BY fecha ASC ");
+			$this->desconectar();
+			$datos = array();
+			while($fila=mysqli_fetch_array($aux))
+			{
+				array_push($datos,$fila);
+			}
+			return $datos;
+    }
+
     public function procesarConsultaItemsPedido($codigo_pedido){
       $this->conectar();
       $aux = $this->consultar(
@@ -41,6 +53,24 @@
    			{
    				array_push($datos,$fila);
    			}
+
+         if(count($datos) != 1){
+           return false;
+         }else{
+           return $datos[0];
+         }
+    }
+
+    public function buscarVenta($codigo_pedido){
+      $this->conectar();
+      $aux = $this->consultar("SELECT P.codigo_pedido, C.nombres, C.apellidos, M.nombres, M.apellidos, P.fecha, P.valor, P.estado
+         FROM Pedido P, Usuario C, Usuario M WHERE P.estado='pagado' AND P.codigo_pedido = '".$codigo_pedido."' AND P.cliente = C.usuario AND P.mesero = M.usuario AND
+         C.rol = 'Cliente' AND M.rol = 'Mesero'");
+         $datos = array();
+        while($fila=mysqli_fetch_array($aux))
+        {
+          array_push($datos,$fila);
+        }
 
          if(count($datos) != 1){
            return false;
@@ -145,8 +175,9 @@
     }
       public function registrarClientePresencial($cliente){
         $this->conectar();
-        $aux = $this->consultar("INSERT INTO Usuario VALUES ('".$cliente."', 'apellidos presencial', 'cedula presencial', 'correo presencial', 'telefono presencial', 'direccion presencial' ,'".$cliente."', '".sha1("1234")."', 'Cliente')");
+        $aux = $this->consultar("INSERT INTO Usuario VALUES ('".$cliente."', 'presencial', 'presencial', 'presencial', 'presencial', 'presencial' ,'".$cliente."', '".sha1("1234")."', 'Cliente')");
         $this->desconectar();
+        return $aux;
       }
 
       public function registarPedido($codigo_pedido, $cliente, $mesero, $valor){
@@ -169,6 +200,30 @@
       public function cancelarPedido($codigo_pedido){
         $this->conectar();
         $aux = $this->consultar("UPDATE Pedido SET estado = 'cancelado', fecha=NOW() WHERE codigo_pedido = '".$codigo_pedido."'");
+        $this->desconectar();
+      }
+
+      public function buscarCantidadDeIngrediente($codigo_item){
+        $this->conectar();
+        $aux = $this->consultar("SELECT cantidad FROM Ingrediente WHERE codigo_ingrediente = '".$codigo_item."'");
+        $this->desconectar();
+        $datos = array();
+        while($fila=mysqli_fetch_array($aux))
+        {
+          array_push($datos,$fila);
+        }
+
+        if(count($datos) != 1){
+          return false;
+        }else{
+          return $datos[0];
+        }
+      }
+
+      public function eliminarPedido($codigo_pedido){
+        $this->conectar();
+        $this->consultar("DELETE FROM Ingrediente_Pedido WHERE codigo_pedido = '".$codigo_pedido."'");
+        $this->consultar("DELETE FROM Pedido WHERE codigo_pedido = '".$codigo_pedido."'");
         $this->desconectar();
       }
 
