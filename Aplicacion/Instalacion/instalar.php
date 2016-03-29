@@ -204,7 +204,7 @@
 
 
 	//se agrega el usuario de tipo gerente para arrancar el sistema
-	$query = "INSERT INTO Usuario VALUES('Cristhian Leonardo','Leon Lizarazo','1090484602','cristhian.leonlizarazo@gmail.com','3223898713', 'Altos de tamarindo casa N-12', 'gerente1', '".sha1("1234")."', 'Gerente')";
+	$query = "INSERT INTO Usuario VALUES('First Name','Last Name','123456798','something@something.com','1234567891', 'Address', 'gerente1', '".sha1("1234")."', 'Gerente')";
 	mysqli_query($conexion,$query);
 
 	$query = "INSERT INTO Despensa VALUES('despensa1', 'gerente1')";
