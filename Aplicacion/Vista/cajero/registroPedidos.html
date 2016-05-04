@@ -18,14 +18,17 @@
             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
               <input class="mdl-textfield__input" type="hidden" name="codigo_pedido_ok" value="{{codigo_pedido}}">
               <input class="mdl-textfield__input" type="text" id="codigo_pedido" name="codigo_pedido" value="{{codigo_pedido}}" required {{disable}}>
-              <label class="mdl-textfield__label" for="codigo_pedido">C&oacute;digo del pedido</label>
+              <label class="mdl-textfield__label" for="codigo_pedido">* C&oacute;digo del pedido</label>
+              <div class="mdl-tooltip" for="codigo_pedido">
+                Campo obligatorio
+              </div>
             </div>
           </div>
         </div>
 
         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
           <input class="mdl-textfield__input" type="text" id="cliente" name="cliente" value="{{cliente}}" required>
-          <label class="mdl-textfield__label" for="cliente">Usuario o Nombre del cliente</label>
+          <label class="mdl-textfield__label" for="cliente">* Usuario o Nombre del cliente</label>
         </div>
         <div class="mdl-tooltip mdl-tooltip--large" for="cliente">
     Si el cliente no est&aacute; registrado, asignele un usuario
@@ -44,7 +47,7 @@
         <div class="mdl-grid">
           <div class="mdl-cell mdl-cell--12-col">
             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-              <label for="">Items</label>
+              <label for="">* Items</label>
               <select name="items[]" id="itemX" {{oculto}} {{required}}>
                 {{items}}
               </select>
@@ -52,7 +55,7 @@
             </div>
             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
               <input class="mdl-textfield__input" type="number" step="any" id="cantidadX" name="cantidades[]" value="" {{required}} {{oculto}}>
-              <label class="mdl-textfield__label forX" for="cantidadX" {{oculto}}>Cantidad</label>
+              <label class="mdl-textfield__label forX" for="cantidadX" {{oculto}}>* Cantidad</label>
             </div>
           </div>
         </div>
@@ -66,6 +69,9 @@
             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
               <input class="mdl-textfield__input" type="text" id="valor" name="valor" value="{{valor}}" required {{disable}}>
               <label class="mdl-textfield__label" for="valor">Valor</label>
+              <div class="mdl-tooltip" for="valor">
+                Campo obligatorio
+              </div>
             </div>
           </div>
         </div>

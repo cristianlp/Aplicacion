@@ -158,7 +158,7 @@ function alerta (mensaje, tipo) {
 						"<label class='mdl-textfield__label' for=''></label>"+
 					"</div>"+
 					"<div class='mdl-textfield mdl-js-textfield mdl-textfield--floating-label'>"+
-						"<input class='mdl-textfield__input any' type='number' step='any' id='cantidadX' name='cantidades[]' value='' required {{disable}} placeholder='Cantidad'> "+
+						"<input class='mdl-textfield__input any' type='number' step='any' id='cantidadX' name='cantidades[]' value='' required {{disable}} placeholder='* Cantidad'> "+
 					"</div>"+
 				"</div>"+
 			"</div>"
