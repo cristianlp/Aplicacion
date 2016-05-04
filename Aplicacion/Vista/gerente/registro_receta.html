@@ -27,7 +27,7 @@
 
 
         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-          <input class="mdl-textfield__input" type="text" id="nombre_receta" name="nombre_receta" value="{{nombre_receta}}" required>
+          <input class="mdl-textfield__input" type="text" id="nombre_receta" pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚüÜ ']{2,25}" name="nombre_receta" value="{{nombre_receta}}" required>
           <label class="mdl-textfield__label" for="nombre_receta">* Nombre de la receta</label>
           <div class="mdl-tooltip" for="nombre_receta">
             Campo obligatorio
