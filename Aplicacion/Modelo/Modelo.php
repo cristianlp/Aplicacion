@@ -31,6 +31,7 @@ class Modelo{
 		*/
 		public function consultar($sql)
 		{
+			$sql = strip_tags($sql);
 			return mysqli_query($this->conexion,$sql);
 		}
 
