@@ -6,7 +6,7 @@
       <i class="material-icons">add</i>
     </button>
     <div class="mdl-tooltip mdl-tooltip--large" for="add">
-    Agregar un ingrediente mas    </div>
+    Agregar un ingrediente m&aacute;s    </div>
 
       <form action="index.php" method="post" id="formulario-agregar-empleado">
 
@@ -17,7 +17,10 @@
             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
               <input class="mdl-textfield__input" type="hidden" name="codigo_receta_ok" value="{{codigo_receta}}">
               <input class="mdl-textfield__input" type="text" id="codigo_receta" name="codigo_receta" value="{{codigo_receta}}" required {{disable}}>
-              <label class="mdl-textfield__label" for="codigo_receta">codigo de la receta</label>
+              <label class="mdl-textfield__label" for="codigo_receta">* C&oacute;digo de la receta</label>
+              <div class="mdl-tooltip" for="codigo_receta">
+                Campo obligatorio
+              </div>
             </div>
           </div>
         </div>
@@ -25,7 +28,10 @@
 
         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
           <input class="mdl-textfield__input" type="text" id="nombre_receta" name="nombre_receta" value="{{nombre_receta}}" required>
-          <label class="mdl-textfield__label" for="nombre_receta">Nombre de la receta</label>
+          <label class="mdl-textfield__label" for="nombre_receta">* Nombre de la receta</label>
+          <div class="mdl-tooltip" for="nombre_receta">
+            Campo obligatorio
+          </div>
         </div>
 
         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
@@ -60,7 +66,10 @@
           <div class="mdl-cell mdl-cell--12-col">
             <div class="mdl-textfield mdl-js-textfield">
               <textarea class="mdl-textfield__input ancho-100" type="text" rows= "12" id="sample5" name="descripcion_proceso" required >{{descripcion_proceso}}</textarea>
-              <label class="mdl-textfield__label" for="sample5">Descripcion del proceso...</label>
+              <label class="mdl-textfield__label" for="sample5">* Descripcion del proceso...</label>
+              <div class="mdl-tooltip" for="sample5">
+                Campo obligatorio
+              </div>
             </div>
           </div>
         </div>
