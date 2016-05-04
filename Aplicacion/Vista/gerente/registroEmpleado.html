@@ -19,7 +19,10 @@ Atr&aacute;s    </div>
           <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
             <input type="hidden" name="usuario" value="{{usuario}}" required>
             <input class="mdl-textfield__input" type="text" id="usuario" name="usuario" value="{{usuario}}" required {{disable}}>
-            <label class="mdl-textfield__label" for="usuario">Usuario</label>
+            <label class="mdl-textfield__label" for="usuario">* Usuario</label>
+            <div class="mdl-tooltip" for="usuario">
+              Campo obligatorio
+            </div>
           </div>
         </div>
       </div>
@@ -27,32 +30,50 @@ Atr&aacute;s    </div>
 
       <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
         <input class="mdl-textfield__input" type="text" id="nombres" name="nombres" value="{{nombres}}" required>
-        <label class="mdl-textfield__label" for="nombres">Nombres</label>
+        <label class="mdl-textfield__label" for="nombres">* Nombres</label>
+        <div class="mdl-tooltip" for="nombres">
+          Campo obligatorio
+        </div>
       </div>
 
       <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
         <input class="mdl-textfield__input" type="text" id="apellidos" name="apellidos" value="{{apellidos}}" required>
-        <label class="mdl-textfield__label" for="apellidos">Apellidos</label>
+        <label class="mdl-textfield__label" for="apellidos">* Apellidos</label>
+        <div class="mdl-tooltip" for="apellidos">
+          Campo obligatorio
+        </div>
       </div><br>
 
       <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
         <input class="mdl-textfield__input" type="text" id="cedula" name="cedula" value="{{cedula}}" required>
-        <label class="mdl-textfield__label" for="cedula">Cedula</label>
+        <label class="mdl-textfield__label" for="cedula">* Cedula</label>
+        <div class="mdl-tooltip" for="cedula">
+          Campo obligatorio
+        </div>
       </div>
 
       <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
         <input class="mdl-textfield__input" type="email" id="correo" name="correo" value="{{correo}}" required>
-        <label class="mdl-textfield__label" for="correo">Correo</label>
+        <label class="mdl-textfield__label" for="correo">* Correo</label>
+        <div class="mdl-tooltip" for="correo">
+          Campo obligatorio
+        </div>
       </div><br>
 
       <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
         <input class="mdl-textfield__input" type="text" id="telefono" name="telefono" value="{{telefono}}" required>
-        <label class="mdl-textfield__label" for="telefono">Telefono</label>
+        <label class="mdl-textfield__label" for="telefono">* Telefono</label>
+        <div class="mdl-tooltip" for="telefono">
+          Campo obligatorio
+        </div>
       </div>
 
       <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
         <input class="mdl-textfield__input" type="text" id="direccion" name="direccion" value="{{direccion}}" required>
-        <label class="mdl-textfield__label" for="direccion">Direccion</label>
+        <label class="mdl-textfield__label" for="direccion">* Direccion</label>
+        <div class="mdl-tooltip" for="direccion">
+          Campo obligatorio
+        </div>
       </div>
 
 
@@ -60,7 +81,10 @@ Atr&aacute;s    </div>
               <div class="mdl-cell mdl-cell--12-col">
                 <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                   <input class="mdl-textfield__input" type="password" id="password" name="password" value="{{password}}" required {{disable}}>
-                  <label class="mdl-textfield__label" for="password">Contraseña</label>
+                  <label class="mdl-textfield__label" for="password">* Contraseña</label>
+                  <div class="mdl-tooltip" for="password">
+                    Campo obligatorio
+                  </div>
                 </div>
               </div>
             </div>
