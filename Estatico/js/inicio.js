@@ -44,7 +44,12 @@ function alerta (mensaje, tipo) {
 	//funcion que poner color cada item de la barra de navagion
 	//dependiendo de la peticion get
 	function colorearNavegacionGerente(){
+		var url = (window.location.href);
+
 		var parametro = ((window.location.href).split("="))[1];
+		if(parametro == null){
+			parametro = $('#accion_nav').val();
+		}
 
 		var dom = "";
 
