@@ -1,0 +1,29 @@
+<input type="hidden" name="name" value="domicilios" id="accion_nav">
+<div class="mdl-grid">
+  <div class="mdl-cell mdl-cell--12-col">
+    <a href="index.php?accion=domicilios" id="">
+      <button id="atras" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored mdl-color--red-600">
+        <i class="material-icons">keyboard_arrow_left</i>
+      </button>
+    </a>
+    <div class="mdl-tooltip mdl-tooltip--large" for="atras">
+      Atr&aacute;s    </div>
+
+    <br><br>
+
+    <p>
+      <strong>C&oacute;digo del domicilio</strong> {{codigo}} <br>
+      <strong>Descripcion(opcional)</strong> {{descripcion}} <br>
+      <strong>Fecha de Entrega : </strong> {{fecha}} <br>
+      <strong>Direcci&oacute;n : </strong> {{direccion}} <br>
+      <strong>Domiciliario: </strong> {{domiciliario}} <br>
+      <strong>Estado: </strong> {{estado}} <br>
+      <strong>Articulos</strong><br>
+
+      <ul>
+        {{articulos}}
+      </ul>
+
+    </p>
+  </div>
+</div>

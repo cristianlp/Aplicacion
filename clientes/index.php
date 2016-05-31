@@ -35,12 +35,11 @@ if(isset($_SESSION["rol"])){
                 case 'cambiar_contrasenia':
                     $cliente->cambiar_contrasenia($_POST["contra_actual"], $_POST["contra_nueva"], $_POST["confir_contra"], $_SESSION["usuario"]);
                     break;
-                case 'consultar_domicilio':
-                    //todo: consultar domicilio, post
-                    $cliente->consultar_domicilio($_POST['codigo_domicilio']);
-                    break;
                 case 'pedir_domicilio':
                     $cliente->pedir_domicilio($_POST['pedido']);
+                    break;
+                case 'consultar_domicilio':
+                    $cliente->detallesDomicilio($_POST['codigo_domicilio']);
                     break;
 
             }

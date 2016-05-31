@@ -116,6 +116,38 @@ class Cliente extends Controlador
 
 	}
 
+	public function detallesDomicilio($codigo){
+
+		$clienteBD = new ClienteBD();
+		$domicilio = $clienteBD->detallesDomicilio($codigo);
+
+		$plantilla = $this -> init();
+		$workspace = $this->leerPlantilla("Vista/cliente/detalles_domicilios.html");
+
+		$workspace = $this->reemplazar($workspace, '{{codigo}}', $domicilio['codigo']);
+		$workspace = $this->reemplazar($workspace, '{{descripcion}}', $domicilio['descripcion']);
+		$workspace = $this->reemplazar($workspace, '{{fecha}}', $domicilio['fecha_entrega'] . '-');
+		$workspace = $this->reemplazar($workspace, '{{direccion}}', $domicilio['direccion']);
+		$workspace = $this->reemplazar($workspace, '{{domiciliario}}', $domicilio['dnom'] . $domicilio['dapell']);
+		$workspace = $this->reemplazar($workspace, '{{estado}}', $domicilio['estado']);
+
+		$pes = $clienteBD->articulosDomicilio($codigo, 'producto');
+		$reces = $clienteBD->articulosDomicilio($codigo, 'receta');
+		$articulos = array_merge($pes, $reces );
+		
+		$data = '';
+		foreach($articulos as $articulo){
+			$data .= '<li>'. $articulo["cantidad"].' - '.$articulo["nombre"].'</li>';
+		}
+
+		$workspace = $this->reemplazar($workspace, "{{articulos}}", $data);
+		$plantilla = $this->reemplazar($plantilla, "{{workspace}}", $workspace);
+		$this->mostrarVista($plantilla);
+
+	}
+
+
+
 	private function cargarConsultaDomicilios(){
 		$clienteBD = new ClienteBD();
 

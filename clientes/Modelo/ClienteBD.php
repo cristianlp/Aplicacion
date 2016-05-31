@@ -64,7 +64,7 @@
               $producto = $productos[$i];
 
               $aux = $this->consultar("INSERT INTO ingrediente_domicilio  VALUES
-                ( '$domicilio', '" . $producto['codigo'] . "' ,  '" . $producto['cantidad'] . "', '" . $producto['tipo'] . "')");
+                ( '$domicilio', '" . substr( $producto['codigo']  , 2). "' ,  '" . $producto['cantidad'] . "', '" . $producto['tipo'] . "')");
 
           }
           $this->desconectar();
@@ -284,6 +284,48 @@
         $this->consultar("DELETE FROM Ingrediente_Pedido WHERE codigo_pedido = '".$codigo_pedido."'");
         $this->consultar("DELETE FROM Pedido WHERE codigo_pedido = '".$codigo_pedido."'");
         $this->desconectar();
+      }
+
+      public function detallesDomicilio($codigo)
+      {
+
+          $this->conectar();
+          $datos = $this->consultar("SELECT d.id as codigo, d.descripcion, d.fecha_entrega, d.direccion, u.nombres,
+            u.apellidos, dom.nombres as dnom, dom.apellidos as dapell, d.tiempo_gastado, d.estado 
+            FROM Domicilio d, Usuario u, Usuario dom 
+	        WHERE d.id = ". $codigo." AND d.domiciliario = dom.usuario AND  d.usuario = u.usuario");
+          $this->desconectar();
+          while($fila = mysqli_fetch_array($datos))
+          {
+              $datos = $fila;
+          }
+
+          return $datos;
+
+      }
+
+      public function articulosDomicilio($codigo, $tipo)
+      {
+
+          $tabla = ($tipo == 'receta') ? 'Receta' : 'Ingrediente';
+          $codigo_x = ($tipo == 'receta') ? 'codigo_receta' : 'codigo_ingrediente';
+          $nombre_x = ($tipo == 'receta') ? 'nombre_receta' : 'nombre_ingrediente';
+
+          $this->conectar();
+          $consulta = "SELECT i.". $nombre_x ." as nombre, ido.cantidad
+            from $tabla i, ingrediente_domicilio ido
+            where ido.domicilio = ". $codigo  ." and ido.codigo_ingrediente = i.". $codigo_x;
+
+          $aux = $this->consultar($consulta);
+          $this->desconectar();
+          $datos = array();
+          while($fila = mysqli_fetch_array($aux))
+          {
+              array_push($datos,$fila);
+          }
+
+          return $datos;
+
       }
 
 
