@@ -1,0 +1,19 @@
+<tr>
+  <td class="mdl-data-table__cell--non-numeric">{{codigo_ingrediente}}</td>
+  <td>{{nombre_ingrediente}}</td>
+  <td>{{cantidad}}</td>
+  <td>{{tipo_ingrediente}}</td>
+  <td>{{esta_en_menu}}</td>
+
+  <td>
+    <!-- formulario para editar -->
+    <form action="index.php" method="post">
+      <input type="hidden" name="tipo" value="vistaEditarIngrediente">
+      <input type="hidden" value="{{codigo_ingrediente}}" name="codigo_ingrediente">
+      <button class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored mdl-color-text--teal-500">
+      <i class="material-icons">mode_edit</i>
+      </button>
+    </form>
+  </td>
+
+</tr>

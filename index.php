@@ -4,12 +4,26 @@ session_start();
 
 require_once "Aplicacion/Controlador/Controlador.php";
 require_once "Aplicacion/Controlador/Gerente.php";
-//require_once "Aplicacion/Controlador/Cliente.php";
 require_once "Aplicacion/Controlador/Cajero.php";
 require_once "Aplicacion/Controlador/Chef.php";
 
 $principal = new Controlador();
 //Si esta variable esta definida, el ususario esta logueado
+
+if(isset($_SESSION['message'])){
+	$principal->mostrarMensajes($_SESSION['message']);
+}
+
+if(isset($_SESSION['rol']) && $_SESSION['rol'] == 'Cliente')
+{
+	$_SESSION["nombre"] = false;
+	$_SESSION["rol"] = false;
+	$_SESSION['usuario'] = false;
+	session_destroy();
+	header('location: index.php');
+}
+
+
 if(isset($_SESSION["rol"])){
 
 	//para solicitudes desde formularios
@@ -195,23 +209,6 @@ if(isset($_SESSION["rol"])){
 	}else{
 		$chef->inicioValidado();
 	}
-}else if($_SESSION["rol"] == "Cliente"){
-
-	$cliente = new Cliente();
-
-	if(isset($_GET['accion'])){
-		if($_GET['accion'] == "salir"){
-			$_SESSION["nombre"] = false;
-			$_SESSION["rol"] = false;
-			$_SESSION['usuario'] = false;
-			session_destroy();
-			header('location: index.php');
-		}
-
-	}else{
-		$mesero->inicioValidado();
-	}
-
 }
 }
 //Para los usuarios que no estan logueados

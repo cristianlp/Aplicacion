@@ -1,0 +1,46 @@
+<div class="mdl-grid">
+  <div class="mdl-cell mdl-cell--12-col">
+
+
+<form action="index.php" method="post">
+  <label for="">Usuario o n&uacute;mero de cedula</label>
+  <br>
+  <input type="hidden" name="tipo" value="agregar_consultar_empleado">
+  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+    <input class="mdl-textfield__input" type="text" id="digite" name="parametro_busqueda" required="required">
+    <label class="mdl-textfield__label" for="sample3">Consultar, Agregar</label>
+  </div>
+  <div class="mdl-tooltip mdl-tooltip--large" for="digite">
+En este campo puede consultar o registrar empleados</div>
+  <!-- Colored icon button -->
+  <button class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored">
+    <i class="material-icons">search</i>
+  </button>
+</form>
+
+  </div>
+</div><!--cierra primer grid-->
+
+<div class="mdl-grid">
+  <div class="mdl-cell mdl-cell--12-col">
+
+    <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
+      <thead>
+        <tr>
+          <th class="mdl-data-table__cell--non-numeric">Usuario</th>
+          <th>C&eacute;dula</th>
+          <th>Nombre</th>
+          <th>Cargo</th>
+          <th>Tel&eacute;fono</th>
+          <th>Detalles</th>
+          <th>Editar</th>
+          <th>Eliminar</th>
+        </tr>
+      </thead>
+      <tbody>
+          {{cuerpo_tabla}}
+      </tbody>
+    </table>
+
+  </div>
+</div>

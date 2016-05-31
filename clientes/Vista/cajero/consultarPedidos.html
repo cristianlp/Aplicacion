@@ -1,0 +1,47 @@
+<div class="mdl-grid">
+  <div class="mdl-cell mdl-cell--12-col">
+
+
+<form action="index.php" method="post">
+  <label for="">C&oacute;digo del pedido</label>
+  <br>
+  <input type="hidden" name="tipo" value="agregar_consultar_pedido">
+  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+    <input class="mdl-textfield__input" id="digite" type="text" name="codigo_pedido" required="required">
+    <label class="mdl-textfield__label" for="sample3">Consultar, Agregar</label>
+  </div>
+   <div class="mdl-tooltip mdl-tooltip--large" for="digite">
+En este campo puede consultar o registrar pedidos</div>
+  <!-- Colored icon button -->
+  <button class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored">
+    <i class="material-icons">search</i>
+  </button>
+</form>
+
+  </div>
+</div><!--cierra primer grid-->
+
+<div class="mdl-grid">
+  <div class="mdl-cell mdl-cell--12-col">
+
+    <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
+      <thead>
+        <tr>
+          <th class="mdl-data-table__cell--non-numeric">C&oacute;digo pedido</th>
+          <th>Cliente</th>
+          <th>Mesero</th>
+          <th>Fecha</th>
+          <th>Valor del pedido</th>
+          <th>Estado</th>
+          <th>Detalles</th>
+          <th>Pagar</th>
+          <th>Cancelar</th>
+        </tr>
+      </thead>
+      <tbody>
+          {{cuerpo_tabla}}
+      </tbody>
+    </table>
+
+  </div>
+</div>

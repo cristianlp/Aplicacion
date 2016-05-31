@@ -1,0 +1,84 @@
+<input type="hidden" name="name" value="recetas" id="accion_nav">
+<!-- no matter changes -->
+<div class="mdl-grid">
+  <div class="mdl-cell mdl-cell--12-col">
+    <h4>{{mensaje_encabezado}}</h4>
+
+    <button id="add" class="botoncito_agregar mdl-button mdl-js-button mdl-button--fab mdl-button--colored boton_agregar_ingrediente mdl-color--red-600" {{oculto}}>
+      <i class="material-icons">add</i>
+    </button>
+    <div class="mdl-tooltip mdl-tooltip--large" for="add">
+    Agregar un ingrediente m&aacute;s    </div>
+
+      <form action="index.php" method="post" id="formulario-agregar-empleado">
+
+        <input type="hidden" name="tipo" value="{{tipo}}">
+
+        <div class="mdl-grid margin-center">
+          <div class="mdl-cell mdl-cell--12-col">
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+              <input class="mdl-textfield__input" type="hidden" name="codigo_receta_ok" value="{{codigo_receta}}">
+              <input class="mdl-textfield__input" type="text" id="codigo_receta" name="codigo_receta" value="{{codigo_receta}}" required {{disable}}>
+              <label class="mdl-textfield__label" for="codigo_receta">* C&oacute;digo de la receta</label>
+              <div class="mdl-tooltip" for="codigo_receta">
+                Campo obligatorio
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+          <input class="mdl-textfield__input" type="text" id="nombre_receta" pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚüÜ ']{2,25}" name="nombre_receta" value="{{nombre_receta}}" required>
+          <label class="mdl-textfield__label" for="nombre_receta">* Nombre de la receta</label>
+          <div class="mdl-tooltip" for="nombre_receta">
+            Campo obligatorio
+          </div>
+        </div>
+
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+          <label for="">Chef</label>
+          <select name="chef" required>
+            {{chefs}}
+          </select>
+          <label class="mdl-textfield__label" for="cantidad"></label>
+        </div>
+
+        <div class="mdl-grid">
+          <div class="mdl-cell mdl-cell--12-col">
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+              <label for="">Ingredientes</label>
+              <select name="ingredientes[]" id="ingX" {{oculto}} {{required}}>
+                {{ingredientes}}
+              </select>
+              <label class="mdl-textfield__label" for=""></label>
+            </div>
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+              <input class="mdl-textfield__input" type="number" step="any" id="cantidadX" name="cantidades[]" value="" {{required}} {{oculto}}>
+              <label class="mdl-textfield__label forX" for="cantidadX" {{oculto}}>cantidad</label>
+            </div>
+          </div>
+        </div>
+
+        <div id="panel_agregar_ingredientes">
+
+        </div>
+
+        <div class="mdl-grid margin-center">
+          <div class="mdl-cell mdl-cell--12-col">
+            <div class="mdl-textfield mdl-js-textfield">
+              <textarea class="mdl-textfield__input ancho-100" type="text" rows= "12" id="sample5" name="descripcion_proceso" required >{{descripcion_proceso}}</textarea>
+              <label class="mdl-textfield__label" for="sample5">* Descripcion del proceso...</label>
+              <div class="mdl-tooltip" for="sample5">
+                Campo obligatorio
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <button id="boton-enviar" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent mdl-color--indigo-500">
+          {{nombre_boton}}
+        </button>
+      </form>
+    </div>
+  </div>

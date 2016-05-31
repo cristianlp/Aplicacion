@@ -1,0 +1,84 @@
+<div class="mdl-grid">
+  <div class="mdl-cell mdl-cell--12-col">
+    <h4>{{mensaje_encabezado}}</h4>
+
+    <button id="add" class="botoncito_agregar_item mdl-button mdl-js-button mdl-button--fab mdl-button--colored boton_agregar_ingrediente mdl-color--red-600" {{oculto}}>
+      <i class="material-icons">add</i>
+    </button>
+    <div class="mdl-tooltip mdl-tooltip--large" for="add">
+    Agregar un item más
+    </div>
+
+      <form action="index.php" method="post" id="formulario-agregar-empleado">
+
+        <input type="hidden" name="tipo" value="{{tipo}}">
+
+        <div class="mdl-grid margin-center">
+          <div class="mdl-cell mdl-cell--12-col">
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+              <input class="mdl-textfield__input" type="hidden" name="codigo_pedido_ok" value="{{codigo_pedido}}">
+              <input class="mdl-textfield__input" type="text" id="codigo_pedido" name="codigo_pedido" value="{{codigo_pedido}}" required {{disable}}>
+              <label class="mdl-textfield__label" for="codigo_pedido">* C&oacute;digo del pedido</label>
+              <div class="mdl-tooltip" for="codigo_pedido">
+                Campo obligatorio
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+          <input class="mdl-textfield__input" type="text" pattern="[0-9-a-zA-ZñÑáéíóúÁÉÍÓÚüÜ ']{2,25}" id="cliente" name="cliente" value="{{cliente}}" required>
+          <label class="mdl-textfield__label" for="cliente">* Usuario o Nombre del cliente</label>
+        </div>
+        <div class="mdl-tooltip mdl-tooltip--large" for="cliente">
+    Si el cliente no est&aacute; registrado, asignele un usuario
+    </div>
+
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+          <label for="">Mesero</label>
+          <select name="mesero" required>
+            {{meseros}}
+          </select>
+          <label class="mdl-textfield__label" for="cantidad"></label>
+        </div>
+
+
+
+        <div class="mdl-grid">
+          <div class="mdl-cell mdl-cell--12-col">
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+              <label for="">* Items</label>
+              <select name="items[]" id="itemX" {{oculto}} {{required}}>
+                {{items}}
+              </select>
+              <label class="mdl-textfield__label" for=""></label>
+            </div>
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+              <input class="mdl-textfield__input" type="number" step="any" id="cantidadX" name="cantidades[]" value="" {{required}} {{oculto}}>
+              <label class="mdl-textfield__label forX" for="cantidadX" {{oculto}}>* Cantidad</label>
+            </div>
+          </div>
+        </div>
+
+        <div id="panel_agregar_ingredientes">
+
+        </div>
+
+        <div class="mdl-grid margin-center">
+          <div class="mdl-cell mdl-cell--12-col">
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+              <input class="mdl-textfield__input" type="number" step="0.01" id="valor" name="valor" value="{{valor}}" required {{disable}}>
+              <label class="mdl-textfield__label" for="valor">Valor</label>
+              <div class="mdl-tooltip" for="valor">
+                Campo obligatorio
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <button id="boton-enviar" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent mdl-color--indigo-500">
+          {{nombre_boton}}
+        </button>
+      </form>
+    </div>
+  </div>

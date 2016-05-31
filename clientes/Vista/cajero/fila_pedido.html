@@ -1,0 +1,41 @@
+<tr>
+  <td class="mdl-data-table__cell--non-numeric">{{codigo_pedido}}</td>
+  <td>{{cliente}}</td>
+  <td>{{mesero}}</td>
+  <td>{{fecha}}</td>
+  <td>{{valor}}</td>
+  <td>{{estado}}</td>
+  <td>
+    <!-- formulario para detalles -->
+    <form action="index.php" method="post">
+      <input type="hidden" name="tipo" value="agregar_consultar_pedido">
+      <input type="hidden" value="{{codigo_pedido}}" name="codigo_pedido">
+      <button class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored mdl-color-text--teal-500">
+      <i class="material-icons">list</i>
+      </button>
+    </form>
+  </td>
+
+<td>
+  <!-- formulario para pagar -->
+  <form action="index.php" method="post">
+    <input type="hidden" name="tipo" value="pagarPedido">
+    <input type="hidden" value="{{codigo_pedido}}" name="codigo_pedido">
+    <button class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored mdl-color-text--teal-500">
+    <i class="material-icons">attach_money</i>
+    </button>
+  </form>
+</td>
+<td>
+  
+<!-- formulario para cancelar -->
+<form action="index.php" method="post">
+  <input type="hidden" name="tipo" value="cancelarPedido">
+  <input type="hidden" value="{{codigo_pedido}}" name="codigo_pedido">
+  <button class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored mdl-color-text--red-600">
+  <i class="material-icons">cancel</i>
+  </button>
+</form>
+</td>
+
+</tr>

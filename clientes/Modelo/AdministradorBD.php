@@ -1,18 +1,16 @@
 <?php
 
-
-	include_once "Aplicacion/Modelo/Modelo.php";
+	include_once "Modelo.php";
 
 	class AdministradorBD extends Modelo
 	{
-
 
 		public function login($usuario,$password)
 		{
 
 			$this->conectar();
 			$aux = $this->consultar("SELECT nombres, apellidos , rol FROM Usuario WHERE usuario = '".$usuario."'
-			AND password = '".$password."'");
+			AND password = '".$password."' AND rol = 'Cliente'");
 
 
 			$this->desconectar();

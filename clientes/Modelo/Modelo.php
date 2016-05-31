@@ -13,7 +13,7 @@ class Modelo{
 		*/
 		public function conectar()
 		{
-			$this->conexion = mysqli_connect("localhost","root","123456","SantoSasoft") or die(mysql_error($this->conexion));
+			$this->conexion = mysqli_connect("localhost","root","123456","SantoSasoft") or die(mysql_error($conexion));
 		}
 
 		/**

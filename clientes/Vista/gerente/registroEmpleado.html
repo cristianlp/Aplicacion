@@ -1,0 +1,117 @@
+<input type="hidden" name="name" value="empleados" id="accion_nav">
+<div class="mdl-grid">
+  <div class="mdl-cell mdl-cell--12-col">
+    <h4>{{mensaje_encabezado}}</h4>
+
+    <!-- Colored FAB button with ripple -->
+    <a href="index.php?accion=empleados" id="botonAtras">
+      <button id="atras" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored mdl-color--red-600">
+      <i class="material-icons">keyboard_arrow_left</i>
+    </button>
+  </a>
+    <div class="mdl-tooltip mdl-tooltip--large" for="atras">
+Atr&aacute;s    </div>
+
+    <form action="index.php" method="post" id="formulario-agregar-empleado">
+      <input type="hidden" name="tipo" value="{{tipo}}">
+
+      <div class="mld-grid margin-center">
+        <div class="mdl-cell mdl-cell--12-col">
+          <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <input type="hidden" name="usuario" value="{{usuario}}" required>
+            <input class="mdl-textfield__input" pattern="[0-9-a-zA-ZñÑáéíóúÁÉÍÓÚüÜ ']{2,25}" type="text" id="usuario" name="usuario" value="{{usuario}}" required {{disable}}>
+            <label class="mdl-textfield__label" for="usuario">* Usuario</label>
+            <div class="mdl-tooltip" for="usuario">
+              Campo obligatorio
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+        <input class="mdl-textfield__input" pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚüÜ ']{2,50}" type="text" id="nombres" name="nombres" value="{{nombres}}" required>
+        <label class="mdl-textfield__label" for="nombres">* Nombres</label>
+        <div class="mdl-tooltip" for="nombres">
+          Campo obligatorio
+        </div>
+      </div>
+
+      <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+        <input class="mdl-textfield__input" pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚüÜ ']{2,50}" type="text" id="apellidos" name="apellidos" value="{{apellidos}}" required>
+        <label class="mdl-textfield__label" for="apellidos">* Apellidos</label>
+        <div class="mdl-tooltip" for="apellidos">
+          Campo obligatorio
+        </div>
+      </div><br>
+
+      <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+        <input class="mdl-textfield__input" type="number" id="cedula" name="cedula" value="{{cedula}}" required>
+        <label class="mdl-textfield__label" for="cedula">* Cedula</label>
+        <div class="mdl-tooltip" for="cedula">
+          Campo obligatorio
+        </div>
+      </div>
+
+      <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+        <input class="mdl-textfield__input" type="email" id="correo" name="correo" value="{{correo}}" required>
+        <label class="mdl-textfield__label" for="correo">* Correo</label>
+        <div class="mdl-tooltip" for="correo">
+          Campo obligatorio
+        </div>
+      </div><br>
+
+      <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+        <input class="mdl-textfield__input" type="number" id="telefono" name="telefono" value="{{telefono}}" required>
+        <label class="mdl-textfield__label" for="telefono">* Telefono</label>
+        <div class="mdl-tooltip" for="telefono">
+          Campo obligatorio
+        </div>
+      </div>
+
+      <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+        <input class="mdl-textfield__input" type="text" id="direccion" name="direccion" value="{{direccion}}" required>
+        <label class="mdl-textfield__label" for="direccion">* Direccion</label>
+        <div class="mdl-tooltip" for="direccion">
+          Campo obligatorio
+        </div>
+      </div>
+
+
+            <div class="mld-grid margin-center">
+              <div class="mdl-cell mdl-cell--12-col">
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                  <input class="mdl-textfield__input" type="password" id="password" name="password" value="{{password}}" required {{disable}}>
+                  <label class="mdl-textfield__label" for="password">* Contraseña</label>
+                  <div class="mdl-tooltip" for="password">
+                    Campo obligatorio
+                  </div>
+                </div>
+              </div>
+            </div>
+
+      <div class="mld-grid contenedor-radiobutton">
+        <div class="mdl-cell mdl-cell--12-col">
+          <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-1">
+            <input type="radio" id="option-1" class="mdl-radio__button" name="rol" value="Chef" {{che1}} {{disable}}>
+            <span class="mdl-radio__label">Chef</span>
+          </label>
+          <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-2">
+            <input type="radio" id="option-2" class="mdl-radio__button" name="rol" value="Mesero" {{che2}} {{disable}}>
+            <span class="mdl-radio__label">Mesero</span>
+          </label>
+          <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-3">
+            <input type="radio" id="option-3" class="mdl-radio__button" name="rol" value="Cajero" {{che3}} {{disable}}>
+            <span class="mdl-radio__label">Cajero</span>
+          </label>
+
+        </div>
+      </div>
+
+        <button id="boton-enviar" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent mdl-color--indigo-500">
+        {{nombre_boton}}
+        </button>
+
+    </form>
+  </div>
+</div>

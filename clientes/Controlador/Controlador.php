@@ -15,7 +15,7 @@
 	* @author Bayardo Dandenis Pineda Mogollon 1150982
 	*/
 
-	include_once "Aplicacion/Modelo/AdministradorBD.php";
+	include_once ('Modelo/AdministradorBD.php');
 
 
 	class Controlador{
@@ -74,10 +74,12 @@
 		*	@param $cedula - Numero de cedula del usuario a verificar
 		*	@param $contrasena - Contrasena del usuario a verificar
 		*/
-		public function login($usuario, $password){			
+		public function login($usuario, $password){
 			$passwordSSH=$this->encriptarPassword($password);
 
 			$admin = new AdministradorBD();
+			
+			//echo $passwordSSH . '<=>' . $usuario;die();
 			$datos = $admin->login($usuario, $passwordSSH);
 
 			if($datos != false){
@@ -91,7 +93,7 @@
 				$this->cargarPerfil( $nombre1." ". $apellido1, $datos[2], $usuario);
 				header('Location: index.php');
 			}else{
-				$inicio = $this->leerPlantilla("Aplicacion/Vista/principal/index.html");
+				$inicio = $this->leerPlantilla(__DIR__ . '/../Vista/principal/index.html');
 				$inicio = $this->errorDeLogin($inicio);
 				//$inicio = $this->alerta($inicio, "No se ha podido iniciar sesión", "Verifique sus datos e intentelo nuevamente");
 				$this->mostrarVista($inicio);
