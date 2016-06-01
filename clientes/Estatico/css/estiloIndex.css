@@ -9,7 +9,7 @@ html, *{
 }
 
 body{
-    background: url("../img/fondo2.png") 50% 0 no-repeat fixed;
+    background: url("../img/back.jpg") 50% 0 no-repeat fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;

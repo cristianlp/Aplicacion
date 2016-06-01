@@ -175,7 +175,7 @@
     }
       public function registrarClientePresencial($cliente){
         $this->conectar();
-        $aux = $this->consultar("INSERT INTO Usuario VALUES ('".$cliente."', 'presencial', 'presencial', 'presencial', 'presencial', 'presencial' ,'".$cliente."', '".sha1("1234")."', 'Cliente')");
+        $aux = $this->consultar("INSERT INTO Usuario VALUES ('".$cliente."', 'presencial', 'presencial', 'presencial', 'presencial', 'presencial' ,'".$cliente."', '".sha1("1234")."', 'Cliente', 'virtual', null, null)");
         $this->desconectar();
         return $aux;
       }

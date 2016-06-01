@@ -796,6 +796,7 @@ class Gerente extends Controlador
 	}
 
 	private function cargarConsultaPedidos(){
+
 		$gerenteBD = new GerenteBD();
 		$pedidos = $gerenteBD->visualizarPedidos();
 

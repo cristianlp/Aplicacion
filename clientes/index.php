@@ -39,6 +39,11 @@ if(isset($_SESSION["rol"])){
             switch ($tipo) {
 
                 case 'cambiar_contrasenia':
+
+                    /*$enviar = null;
+                    if(isset($_FILES['perfil'])){
+                        $enviar= $_FILES['perfil'];
+                    }*/
                     $cliente->cambiar_contrasenia($_POST["contra_actual"], $_POST["contra_nueva"], $_POST["confir_contra"], $_SESSION["usuario"]);
                     break;
                 case 'pedir_domicilio':

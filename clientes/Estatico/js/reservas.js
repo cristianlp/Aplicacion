@@ -77,8 +77,8 @@ $(document).ready(function () {
 
                 var data = {};
                 data.reserva = reserva;
-                reserva.usuario = 'dsfsfd';
-                reserva.fecha = new Date();;
+                reserva.usuario = usuario;
+                reserva.fecha = new Date();
                 reserva.nombre = nombre;
                 data.tipo = 'pedir_reserva';
 
@@ -88,6 +88,9 @@ $(document).ready(function () {
                     url : "index.php",
                     success: function(result){
                         window.location.href = 'index.php?accion=reservas';
+                    },
+                    error: function(){
+                        //window.location.href = 'index.php?accion=reservas';
                     }
                 });
 

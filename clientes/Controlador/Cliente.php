@@ -279,12 +279,105 @@ class Cliente extends Controlador
 	private function reservarMesa($mesa)
 	{
 		$clienteBD = new ClienteBD();
-		$clienteBD->cambiarEstadoMesa($mesa['mesa'], 'ocupada');
+		$clienteBD->CambiarEstadoMesa($mesa['mesa'], 'ocupada');
 		$clienteBD->generarReserva('NOW()', $mesa['usuario'], 'activa', $mesa['nombre']);
 		$reserva = $clienteBD->getUltimaReserva();
 
 		$clienteBD->generarReservaMesas($reserva, $mesa['mesa']);
 	}
+
+	public function subirImagen($imagen){
+
+			$errors= array();
+			$file_name = $imagen['name'];
+			$file_size = $imagen['size'];
+			$file_tmp = $imagen['tmp_name'];
+			$file_type = $imagen['type'];
+			$file_ext=strtolower(end(explode('.',$imagen['name'])));
+
+			$expensions= array("jpeg","jpg","png");
+
+			if(in_array($file_ext,$expensions)=== false){
+				$errors[]="extension not allowed, please choose a JPEG or PNG file.";
+			}
+
+			if($file_size > 2097152) {
+				$errors[]='File size must be excately 2 MB';
+			}
+
+			if(empty($errors)==true) {
+				move_uploaded_file($file_tmp,"../Estatico/img/uploads/".$file_name);
+				return "Estatico/img/uploads/".$file_name;
+			}
+
+
+	}
+
+	public function cambiar_contrasenia($contra_actual, $contra_nueva, $confir_contra, $usuario){
+
+		if($contra_actual == '' || $contra_nueva == '' || $confir_contra == ''){
+
+			$plantilla = $this -> init();
+			$workspace = $this->leerPlantilla("Vista/principal/cambioPassword.html");
+			$plantilla = $this->reemplazar($plantilla, "{{workspace}}", $workspace);
+			$plantilla = $this->alerta($plantilla, "Las contraseñas no coinciden-Verfique que sean iguales", "info");
+			$this->mostrarVista($plantilla);
+			return;
+
+		}
+
+
+		$ca = $this->encriptarPassword($contra_actual);
+		$cn = $this->encriptarPassword($contra_nueva);
+		$ccn = $this->encriptarPassword($confir_contra);
+
+
+		if($cn != $ccn){
+			$plantilla = $this -> init();
+			$workspace = $this->leerPlantilla("Aplicacion/Vista/principal/cambioPassword.html");
+			$plantilla = $this->reemplazar($plantilla, "{{workspace}}", $workspace);
+			$plantilla = $this->alerta($plantilla, "Las contraseñas no coinciden-Verfique que sean iguales", "info");
+			$this->mostrarVista($plantilla);
+			return;
+		}
+
+		$administradorBD = new AdministradorBD();
+		$contr_sistema = $administradorBD->buscarContrasenia($usuario);
+		if($contr_sistema != $ca){
+			$plantilla = $this -> init();
+			$workspace = $this->leerPlantilla("Aplicacion/Vista/principal/cambioPassword.html");
+			$plantilla = $this->reemplazar($plantilla, "{{workspace}}", $workspace);
+			$plantilla = $this->alerta($plantilla, "Su contraseña y usuario no coinciden-Verfique sus datos e intentelo de nuevo", "info");
+			$this->mostrarVista($plantilla);
+			return;
+		}
+
+		if($contr_sistema == $cn){
+			$plantilla = $this -> init();
+			$workspace = $this->leerPlantilla("Aplicacion/Vista/principal/cambioPassword.html");
+			$plantilla = $this->reemplazar($plantilla, "{{workspace}}", $workspace);
+			$plantilla = $this->alerta($plantilla, "Esa contraseña ya ha sido usada-Por la seguridad de sus datos digite una contraseña diferente", "info");
+			$this->mostrarVista($plantilla);
+			return;
+		}
+
+		$ok = $administradorBD->cambioContrasenia($usuario, $cn);
+		if($ok){
+			$plantilla = $this -> init();
+			$workspace = $this->leerPlantilla("Aplicacion/Vista/principal/cambioPassword.html");
+			$plantilla = $this->reemplazar($plantilla, "{{workspace}}", $workspace);
+			$plantilla = $this->alerta($plantilla, "La contraseña se ha cambiado exitosamente", "success");
+		}else{
+			$plantilla = $this -> init();
+			$workspace = $this->leerPlantilla("Aplicacion/Vista/principal/cambioPassword.html");
+			$plantilla = $this->reemplazar($plantilla, "{{workspace}}", $workspace);
+			$plantilla = $this->alerta($plantilla, "La contraseña no se ha podido cambiar", "error");
+		}
+
+		$this->mostrarVista($plantilla);
+
+	}
+
 
 
 }

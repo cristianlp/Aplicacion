@@ -62,4 +62,11 @@
       return $aux;
     }
 
+		public function cambiarPerfil($ruta, $usuario){
+			$this->conectar();
+			$aux = $this->consultar("UPDATE Usuario SET perfil = '".$ruta."' WHERE usuario ='".$usuario."', espera = '1' ");
+			$this->desconectar();
+			return $aux;
+		}
+
 	}

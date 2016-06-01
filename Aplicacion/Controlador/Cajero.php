@@ -3,6 +3,7 @@
 require_once "Aplicacion/Controlador/Controlador.php";
 include_once "Aplicacion/Modelo/ClienteBD.php";
 include_once "Aplicacion/Modelo/AdministradorBD.php";
+include_once "Aplicacion/Modelo/CajeroBD.php";
 
 class Cajero extends Controlador
 {

@@ -60,7 +60,7 @@
       $correo, $telefono, $direccion, $rol, $password){
       $this->conectar();
 			$aux = $this->consultar(
-        "INSERT INTO Usuario VALUES('".$nombres."','".$apellidos."','".$cedula."','".$correo."','".$telefono."','".$direccion."','".$usuario."','".$password."','".$rol."');"
+        "INSERT INTO Usuario VALUES('".$nombres."','".$apellidos."','".$cedula."','".$correo."','".$telefono."','".$direccion."','".$usuario."','".$password."','".$rol."', 'presencial', null, null);"
       );
 			$this->desconectar();
 			if($aux)
