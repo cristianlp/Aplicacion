@@ -485,6 +485,20 @@ class Gerente extends Controlador
 		return $plantilla;
 	}
 
+	public function aprobarReserva($codigo_reserva){
+		$gerenteBD = new GerenteBD();
+		$gerenteBD->cambiarEstadoReserva( $codigo_reserva, 'terminada');
+
+
+		$mesas = $gerenteBD->getMesasReserva($codigo_reserva);
+
+		for($i = 0; $i < sizeof($mesas); $i++){
+			$gerenteBD->liberarMesa( $mesas[$i] );
+		}
+
+		header('Location: index.php?accion=reservas');
+	}
+
 	public function vistaEditarEmpleado($usuario){
 		$plantilla = $this -> init();
 		$workspace = $this->leerPlantilla("Aplicacion/Vista/gerente/registroEmpleado.html");
@@ -709,6 +723,66 @@ class Gerente extends Controlador
 		$plantilla = $this->cargarConsultaVentas();
 		$this->mostrarVista($plantilla);
 	}
+
+
+	//nnuevo inicio
+	public function vistareservas()
+	{
+		$plantilla = $this->cargarConsultaReservas();
+		$this->mostrarVista($plantilla);
+	}
+
+	private function cargarConsultaReservas(){
+		$gerenteBD = new GerenteBD();
+
+		$domicilios = $gerenteBD->visualizarReservas();
+
+		$plantilla = $this->init();
+		$workspace = $this->leerPlantilla("Aplicacion/Vista/gerente/consultarReservas.html");
+		$plantilla = $this->procesarConsultaReservas($plantilla, $workspace, $domicilios);
+		return $plantilla;
+	}
+
+	public function procesarConsultaReservas($plantilla, $workspace, $datos)
+	{
+		$total = "";
+		$filaModelo = $this->leerPlantilla("Aplicacion/Vista/gerente/fila_reserva.html");
+
+		$gerenteBD = new GerenteBD();
+
+		for($i = 0; $i < count($datos); $i++){
+			$tr = $filaModelo;
+			$pedido = $datos[$i];
+			$tr = $this->reemplazar($tr, "{{codigo}}", $pedido['id']);
+			$tr = $this->reemplazar($tr, "{{fecha}}", $pedido['fecha_reserva'] . "-");
+			$tr = $this->reemplazar($tr, "{{estado}}", $pedido['estado']);
+			$tr = $this->reemplazar($tr, "{{nombre}}", $pedido['nombre']);
+
+			if($pedido['estado'] !== 'activa'){
+				$tr = $this->reemplazar($tr, "{{disabled}}", "disabled");
+				$tr = $this->reemplazar($tr, "{{color}}", 'gray');
+			}else{
+				$tr = $this->reemplazar($tr, "{{disabled}}", "");
+				$tr = $this->reemplazar($tr, "{{color}}", 'red');
+			}
+
+			$mesas = $gerenteBD->getMesasReserva($pedido['id']);
+
+			$res_m = '';
+			for ($u = 0; $u < sizeof($mesas); $u++){
+				$res_m .= $mesas[$u] . ' - ';
+			}
+			$tr = $this->reemplazar($tr, "{{mesas}}", $res_m);
+
+			$total .= $tr;
+		}
+
+		$workspace = $this->reemplazar($workspace, "{{cuerpo_tabla}}", $total);
+		return $this->reemplazar($plantilla, "{{workspace}}", $workspace);
+	}
+
+	//nuevo fin
+
 
 	private function cargarConsultaVentas(){
 		$gerenteBD = new GerenteBD();

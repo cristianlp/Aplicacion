@@ -12,7 +12,7 @@ class Cliente extends Controlador
 	{
 
 		$plantilla = $this->init();
-		$workspace = $this->leerPlantilla("Vista/cajero/cliente_home.html");
+		$workspace = $this->leerPlantilla("Vista/cliente/cliente_home.html");
 		$plantilla = $this->reemplazar($plantilla, "{{workspace}}", $workspace);
 		$this->mostrarVista($plantilla);
 
@@ -182,5 +182,109 @@ class Cliente extends Controlador
 		$workspace = $this->reemplazar($workspace, "{{cuerpo_tabla}}", $total);
 		return $this->reemplazar($plantilla, "{{workspace}}", $workspace);
 	}
+
+	public function reservas()
+	{
+		$plantilla = $this->cargarConsultaReservas();
+		$this->mostrarVista($plantilla);
+	}
+
+	private function cargarConsultaReservas(){
+		$clienteBD = new ClienteBD();
+
+		$domicilios = $clienteBD->visualizarReservas();
+
+		$plantilla = $this->init();
+		$workspace = $this->leerPlantilla("Vista/cliente/consultarReservas.html");
+		$plantilla = $this->procesarConsultaReservas($plantilla, $workspace, $domicilios);
+		return $plantilla;
+	}
+
+	public function procesarConsultaReservas($plantilla, $workspace, $datos)
+	{
+		$total = "";
+		$filaModelo = $this->leerPlantilla("Vista/cliente/fila_reserva.html");
+		
+		$clienteBD = new ClienteBD();
+		
+		for($i = 0; $i < count($datos); $i++){
+			$tr = $filaModelo;
+			$pedido = $datos[$i];
+			$tr = $this->reemplazar($tr, "{{codigo}}", $pedido['id']);
+			$tr = $this->reemplazar($tr, "{{fecha}}", $pedido['fecha_reserva'] . "-");
+			$tr = $this->reemplazar($tr, "{{estado}}", $pedido['estado']);
+			$tr = $this->reemplazar($tr, "{{nombre}}", $pedido['nombre']);
+
+			$mesas = $clienteBD->getMesasReserva($pedido['id']);
+
+			$res_m = '';
+			for ($u = 0; $u < sizeof($mesas); $u++){
+				$res_m .= $mesas[$u] . ' - ';
+			}
+			$tr = $this->reemplazar($tr, "{{mesas}}", $res_m);
+			
+			$total .= $tr;
+		}
+
+		$workspace = $this->reemplazar($workspace, "{{cuerpo_tabla}}", $total);
+		return $this->reemplazar($plantilla, "{{workspace}}", $workspace);
+	}
+
+	public function vista_solicitar_reserva()
+	{
+
+		$plantilla = $this -> init();
+		$workspace = $this->leerPlantilla("Vista/cliente/solicitar_reserva.html");
+		$cliente = new ClienteBD();
+		$workspace = $this->reemplazar($workspace, "{{mesas}}", $this->procesarConsultaMesas($cliente->visualizarMesas()) );
+		$plantilla = $this->reemplazar($plantilla, "{{workspace}}", $workspace);
+		$this->mostrarVista($plantilla);
+
+	}
+
+	private function procesarConsultaMesas($mesas)
+	{
+
+		$aux = $this->leerPlantilla("Vista/cliente/auxiliar_radio.html");
+		$total = '';
+		for($i = 0; $i < sizeof($mesas); $i++){
+			$mesa = $mesas[$i];
+			$temp = $aux . '';
+			$temp = $this->reemplazar($temp, '{{codigo}}', $mesa['id']);
+			$temp = $this->reemplazar($temp, '{{nombre}}', $mesa['nombre']);
+			$temp = $this->reemplazar($temp, '{{cantidad}}', $mesa['cantidad']);
+
+			$total .= $temp;
+		}
+
+		$total .= '<script>var bandera = true; var usuario = "' .  $_SESSION['usuario'] .'";</script>';
+
+		return $total;
+
+	}
+
+	public function pedir_reserva($reserva)
+	{
+
+		if($reserva['cantidad'] == 0){
+
+			$this->reservarMesa($reserva);
+
+		}else{
+			//todo : buscar unas mesas que se ajusten
+		}
+
+	}
+
+	private function reservarMesa($mesa)
+	{
+		$clienteBD = new ClienteBD();
+		$clienteBD->cambiarEstadoMesa($mesa['mesa'], 'ocupada');
+		$clienteBD->generarReserva('NOW()', $mesa['usuario'], 'activa', $mesa['nombre']);
+		$reserva = $clienteBD->getUltimaReserva();
+
+		$clienteBD->generarReservaMesas($reserva, $mesa['mesa']);
+	}
+
 
 }

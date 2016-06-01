@@ -78,6 +78,12 @@ function alerta (mensaje, tipo) {
 				case "cambiar_password":
 					dom = ".nav8";
 					break;
+				case "reservas":
+					dom = ".nav9";
+					break;
+				case "usuarios":
+					dom = ".nav10";
+					break;
 			}
 			$(dom).addClass("active_current");
 		}

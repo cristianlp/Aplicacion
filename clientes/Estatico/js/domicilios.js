@@ -153,7 +153,6 @@ $(document).ready(function (){
                     type : 'POST',
                     url : "index.php",
                     success: function(result){
-
                         window.location.href = 'index.php?accion=domicilios';
                     }
                 });

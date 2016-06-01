@@ -11,6 +11,12 @@ if(isset($_SESSION['messages'])){
     $principal->mostrarMensajes($_SESSION['messages']);
 }
 
+if(isset($_SESSION['rol']) && !isset($_GET['accion']) && !isset($_POST['tipo'])){
+    $cliente = new Cliente();
+    $cliente->inicioValidado();
+    exit();
+}
+
 if(isset($_SESSION['rol']) && $_SESSION['rol'] != 'Cliente')
 {
     $_SESSION["nombre"] = false;
@@ -41,6 +47,9 @@ if(isset($_SESSION["rol"])){
                 case 'consultar_domicilio':
                     $cliente->detallesDomicilio($_POST['codigo_domicilio']);
                     break;
+                case 'pedir_reserva':
+                    $cliente->pedir_reserva($_POST['reserva']);
+                    break;
 
             }
 
@@ -69,6 +78,9 @@ if(isset($_SESSION["rol"])){
                     break;
                 case 'reservas':
                     $cliente->reservas();
+                    break;
+                case 'solicitar_reserva':
+                    $cliente->vista_solicitar_reserva();
                     break;
                 case 'cambiar_password':
                     $cliente->vistaCambioPassword();

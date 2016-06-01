@@ -63,7 +63,8 @@ function alerta (mensaje, tipo) {
 				case "domicilios":
 					dom = ".nav2";
 					break;
-				case "despensa":
+				case "solicitar_reserva":
+				case "reservas":
 					dom = ".nav3";
 					break;
 				case "empleados":

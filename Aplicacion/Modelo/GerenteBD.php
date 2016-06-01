@@ -135,6 +135,37 @@
       return $aux;
     }
 
+      public function visualizarReservas()
+      {
+
+          $this->conectar();
+          $aux = $this->consultar("SELECT * FROM Reserva ORDER BY fecha_reserva DESC ");
+          $this->desconectar();
+          $datos = array();
+          while($fila=mysqli_fetch_array($aux))
+          {
+              array_push($datos,$fila);
+          }
+          return $datos;
+
+      }
+
+      public function getMesasReserva($id)
+      {
+
+          $this->conectar();
+          $aux = $this->consultar("select mesa.id from Mesa mesa, reservacion_mesa rm where rm.reserva = ".$id." and rm.mesa = mesa.id");
+          $this->desconectar();
+          $datos = array();
+          while($fila=mysqli_fetch_array($aux))
+          {
+              array_push($datos,$fila['id']);
+          }
+          return $datos;
+
+
+      }
+
     public function visualizarIngredientes(){
       $this->conectar();
       $aux = $this->consultar("SELECT * FROM Ingrediente ORDER BY esta_en_menu DESC");
@@ -346,6 +377,23 @@
         return true;
       }
     }
+
+      public function cambiarEstadoReserva($reserva, $estado){
+
+          $consulta = "UPDATE Reserva SET estado = '$estado' WHERE id = $reserva ";
+          $this->conectar();
+          $this->consultar($consulta);
+          $this->desconectar();
+      }
+
+      public function liberarMesa( $mesa ){
+
+          $consulta = "UPDATE Mesa SET estado = 'libre' WHERE id = $mesa ";
+          $this->conectar();
+          $this->consultar($consulta);
+          $this->desconectar();
+      }
+
 
 
   }

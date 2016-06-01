@@ -1,0 +1,20 @@
+<tr>
+  <td class="mdl-data-table__cell--non-numeric">{{codigo}}</td>
+  <td>{{fecha}}</td>
+  <td>{{estado}}</td>
+  <td>{{mesas}}</td>
+  <td>{{nombre}}</td>
+
+  <td>
+    <!-- formulario para eliminar -->
+    <form action="index.php" method="post" id="formulario-eliminar-empleado">
+      <input type="hidden" name="tipo" value="aprobar_reserva">
+      <input type="hidden" value="{{codigo}}" name="codigo_reserva">
+      <button class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored mdl-color-text--{{color}}-800" {{disabled}}>
+        <i class="material-icons">done_all</i>
+      </button>
+    </form>
+  </td>
+
+
+</tr>

@@ -39,6 +39,8 @@ if(isset($_SESSION["rol"])){
 			);
 		}else if($_POST["tipo"] == "vistaEditarEmpleado"){
 			$gerente->vistaEditarEmpleado($_POST["usuario"]);
+		}else if($_POST["tipo"] == "aprobar_reserva"){
+				$gerente->aprobarReserva($_POST["codigo_reserva"]);
 		}else if($_POST["tipo"] == "editarEmpleado"){
 			$gerente->editarEmpleado($_POST["usuario"], $_POST["nombres"], $_POST["apellidos"],
 			$_POST["cedula"], $_POST["correo"], $_POST["telefono"], $_POST["direccion"]);
@@ -151,6 +153,9 @@ if(isset($_SESSION["rol"])){
 			case "ventas":
 			$gerente->vistaVentas();
 			break;
+			case "reservas":
+				$gerente->vistaReservas();
+				break;
 
 		}//fin del switch
 
